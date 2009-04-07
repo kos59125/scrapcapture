@@ -93,7 +93,7 @@ namespace RecycleBin.WindowCapture
 		{
 			get
 			{
-				return new Size((int)(DrawnRegion.Width * DrawnScale), (int)(DrawnRegion.Height * DrawnScale));
+				return new Size((int)Math.Ceiling(DrawnRegion.Width * DrawnScale), (int)Math.Ceiling(DrawnRegion.Height * DrawnScale));
 			}
 		}
 
