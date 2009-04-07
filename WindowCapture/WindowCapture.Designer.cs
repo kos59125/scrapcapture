@@ -31,12 +31,12 @@
 			this.components = new System.ComponentModel.Container();
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.adjustWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.adjustWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -50,7 +50,7 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(386, 126);
+			this.contextMenuStrip.Size = new System.Drawing.Size(386, 104);
 			// 
 			// addWindowsToolStripMenuItem
 			// 
@@ -58,6 +58,14 @@
 			this.addWindowsToolStripMenuItem.Size = new System.Drawing.Size(385, 22);
 			this.addWindowsToolStripMenuItem.Text = "取り込むウィンドウを追加";
 			this.addWindowsToolStripMenuItem.DropDownOpening += new System.EventHandler(this.selectWindowsToolStripMenuItem_DropDownOpening);
+			// 
+			// adjustWindowToolStripMenuItem
+			// 
+			this.adjustWindowToolStripMenuItem.Name = "adjustWindowToolStripMenuItem";
+			this.adjustWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+			this.adjustWindowToolStripMenuItem.Size = new System.Drawing.Size(385, 22);
+			this.adjustWindowToolStripMenuItem.Text = "ウィンドウサイズをクライアントに合わせる (&A)";
+			this.adjustWindowToolStripMenuItem.Click += new System.EventHandler(this.adjustWindowToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -91,14 +99,6 @@
 			this.notifyIcon.Text = "notifyIcon";
 			this.notifyIcon.Visible = true;
 			// 
-			// adjustWindowToolStripMenuItem
-			// 
-			this.adjustWindowToolStripMenuItem.Name = "adjustWindowToolStripMenuItem";
-			this.adjustWindowToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-			this.adjustWindowToolStripMenuItem.Size = new System.Drawing.Size(385, 22);
-			this.adjustWindowToolStripMenuItem.Text = "ウィンドウサイズをクライアントに合わせる (&A)";
-			this.adjustWindowToolStripMenuItem.Click += new System.EventHandler(this.adjustWindowToolStripMenuItem_Click);
-			// 
 			// WindowCapture
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -108,7 +108,7 @@
 			this.ContextMenuStrip = this.contextMenuStrip;
 			this.Cursor = System.Windows.Forms.Cursors.Default;
 			this.Name = "WindowCapture";
-			this.Text = "WindowCapture";
+			this.Text = "Window Capture";
 			this.contextMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 
