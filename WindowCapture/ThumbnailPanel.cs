@@ -237,9 +237,9 @@ namespace RecycleBin.WindowCapture
 		{
 			this.components = new System.ComponentModel.Container();
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.hideWindowBorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -252,25 +252,25 @@ namespace RecycleBin.WindowCapture
 			this.contextMenuStrip.Name = "contextMenuStrip";
 			this.contextMenuStrip.Size = new System.Drawing.Size(244, 54);
 			// 
-			// removeToolStripMenuItem
-			// 
-			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-			this.removeToolStripMenuItem.Text = "削除 (&X)";
-			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(240, 6);
-			// 
 			// hideWindowBorderToolStripMenuItem
 			// 
 			this.hideWindowBorderToolStripMenuItem.CheckOnClick = true;
 			this.hideWindowBorderToolStripMenuItem.Name = "hideWindowBorderToolStripMenuItem";
 			this.hideWindowBorderToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
 			this.hideWindowBorderToolStripMenuItem.Text = "ウィンドウ枠を表示しない (&H)";
-			this.hideWindowBorderToolStripMenuItem.Click += new System.EventHandler(this.hideWindowBorderToolStripMenuItem_Click);
+			this.hideWindowBorderToolStripMenuItem.CheckedChanged += new System.EventHandler(this.hideWindowBorderToolStripMenuItem_CheckedChanged);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(240, 6);
+			// 
+			// removeToolStripMenuItem
+			// 
+			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+			this.removeToolStripMenuItem.Text = "削除 (&X)";
+			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
 			// ThumbnailPanel
 			// 
@@ -285,7 +285,7 @@ namespace RecycleBin.WindowCapture
 			Dispose(true);
 		}
 
-		private void hideWindowBorderToolStripMenuItem_Click(object sender, EventArgs e)
+		private void hideWindowBorderToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
 		{
 			ClientAreaOnly = hideWindowBorderToolStripMenuItem.Checked;
 		}
