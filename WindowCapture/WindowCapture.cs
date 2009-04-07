@@ -108,6 +108,7 @@ namespace RecycleBin.WindowCapture
 			ThumbnailPanel panel = new ThumbnailPanel();
 			Controls.Add(panel);
 			panel.SetWindow(windowHandle);
+			panel.BringToFront();
 		}
 
 		[DllImport("shell32.dll")]
