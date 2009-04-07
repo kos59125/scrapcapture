@@ -112,6 +112,7 @@
             this.removeToolStripMenuItem});
 			this.panelContextMenuStrip.Name = "contextMenuStrip";
 			this.panelContextMenuStrip.Size = new System.Drawing.Size(244, 76);
+			this.panelContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.panelContextMenuStrip_Opening);
 			// 
 			// hideWindowBorderToolStripMenuItem
 			// 
@@ -133,7 +134,7 @@
 			this.removeToolStripMenuItem.Text = "削除 (&X)";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
-			// WindowCapture
+			// WindowCaptureForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,7 +142,7 @@
 			this.ClientSize = new System.Drawing.Size(464, 323);
 			this.ContextMenuStrip = this.contextMenuStrip;
 			this.Cursor = System.Windows.Forms.Cursors.Default;
-			this.Name = "WindowCapture";
+			this.Name = "WindowCaptureForm";
 			this.Text = "Window Capture";
 			this.contextMenuStrip.ResumeLayout(false);
 			this.panelContextMenuStrip.ResumeLayout(false);
