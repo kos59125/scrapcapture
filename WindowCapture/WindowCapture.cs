@@ -106,6 +106,7 @@ namespace RecycleBin.WindowCapture
 		private void CaptureWindow(IntPtr windowHandle)
 		{
 			ThumbnailPanel panel = new ThumbnailPanel();
+			panel.ContextMenuStrip = panelContextMenuStrip;
 			Controls.Add(panel);
 			panel.SetWindow(windowHandle);
 			panel.BringToFront();
@@ -143,6 +144,22 @@ namespace RecycleBin.WindowCapture
 					panel.Left -= (int)bounds.X;
 					panel.Top -= (int)bounds.Y;
 				}
+			}
+		}
+
+		private void hideWindowBorderToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
+			panel.ClientAreaOnly = hideWindowBorderToolStripMenuItem.Checked;
+		}
+
+		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Control panel = panelContextMenuStrip.SourceControl;
+			Controls.Remove(panel);
+			if (!panel.IsDisposed)
+			{
+				panel.Dispose();
 			}
 		}
 	}

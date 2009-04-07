@@ -63,9 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ThumbnailPanel.resx">
-      <DependentUpon>ThumbnailPanel.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WindowCapture.resx">
       <DependentUpon>WindowCapture.cs</DependentUpon>
     </EmbeddedResource>
