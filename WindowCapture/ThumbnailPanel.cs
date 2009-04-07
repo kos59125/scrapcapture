@@ -108,6 +108,7 @@ namespace RecycleBin.WindowCapture
 			if (thumbnail != IntPtr.Zero)
 			{
 				DesktopWindowManager.Unregister(thumbnail);
+				thumbnail = IntPtr.Zero;
 			}
 
 			thumbnail = DesktopWindowManager.Register(FindForm(), windowHandle);
@@ -141,6 +142,7 @@ namespace RecycleBin.WindowCapture
 			if (thumbnail != IntPtr.Zero)
 			{
 				DesktopWindowManager.Unregister(thumbnail);
+				thumbnail = IntPtr.Zero;
 			}
 			thumbnail = DesktopWindowManager.Register(FindForm(), windowHandle);
 			UpdateThubmnail();
@@ -183,6 +185,7 @@ namespace RecycleBin.WindowCapture
 				if (thumbnail != IntPtr.Zero)
 				{
 					DesktopWindowManager.Unregister(thumbnail);
+					thumbnail = IntPtr.Zero;
 				}
 				base.Dispose(disposing);
 			}
