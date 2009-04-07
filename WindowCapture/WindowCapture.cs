@@ -50,7 +50,7 @@ namespace RecycleBin.WindowCapture
 
 			foreach (ThumbnailPanel panel in Controls)
 			{
-				if (panel.ClientRectangle.Contains(e.Location))
+				if (panel.Bounds.Contains(e.Location))
 				{
 					if (e.Delta > 0)
 					{
