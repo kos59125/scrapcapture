@@ -18,7 +18,7 @@
     <ManifestCertificateThumbprint>FEED388F869EBFCF384B7D425F3AC053CCEFC598</ManifestCertificateThumbprint>
     <GenerateManifests>true</GenerateManifests>
     <TargetZone>LocalIntranet</TargetZone>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -30,11 +30,15 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>false</MapFileExtensions>
     <InstallUrl>http://repos.recyclebin.jp/capture/publish/</InstallUrl>
+    <SupportUrl>http://trac.recyclebin.jp/capture/</SupportUrl>
+    <ProductName>Window Capture</ProductName>
+    <PublisherName>RecycleBin</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <DisallowUrlActivation>true</DisallowUrlActivation>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -90,9 +94,6 @@
     <EmbeddedResource Include="WindowCapture.resx">
       <DependentUpon>WindowCapture.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
