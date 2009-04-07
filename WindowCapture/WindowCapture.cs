@@ -44,6 +44,27 @@ namespace RecycleBin.WindowCapture
 			notifyIcon.Dispose();
 		}
 
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			base.OnMouseWheel(e);
+
+			foreach (ThumbnailPanel panel in Controls)
+			{
+				if (panel.ClientRectangle.Contains(e.Location))
+				{
+					if (e.Delta > 0)
+					{
+						panel.DrawnScale += 0.05F;
+					}
+					else if (e.Delta < 0 && panel.DrawnScale > 0.05F)
+					{
+						panel.DrawnScale -= 0.05F;
+					}
+					break;
+				}
+			}
+		}
+
 		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
