@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("RecycleBin")]
-[assembly: AssemblyProduct("WindowCapture")]
+[assembly: AssemblyProduct("Window Capture")]
 [assembly: AssemblyCopyright("Copyright © boke 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 次の GUID は、このプロジェクトが COM に公開される場合の、typelib の ID です
-[assembly: Guid("962b1b9d-f6ce-4860-a869-9775520fb565")]
+[assembly: Guid("609b175c-954a-45b7-a258-6a67be48510c")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //

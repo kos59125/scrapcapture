@@ -1,6 +1,6 @@
 ﻿namespace RecycleBin.WindowCapture
 {
-	partial class WindowCapture
+	partial class WindowCaptureForm
 	{
 		/// <summary>
 		/// 必要なデザイナ変数です。

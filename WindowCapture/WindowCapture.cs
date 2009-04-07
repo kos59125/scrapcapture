@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 
 namespace RecycleBin.WindowCapture
 {
-	public partial class WindowCapture : Form
+	public partial class WindowCaptureForm : Form
 	{
 		private readonly ToolStripMenuItem NoSelectionItem;
 
-		public WindowCapture()
+		public WindowCaptureForm()
 		{
 			InitializeComponent();
 

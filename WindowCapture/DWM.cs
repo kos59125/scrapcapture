@@ -56,7 +56,7 @@ namespace RecycleBin.WindowCapture
 		DWM_TNP_VISIBLE = 0x00000008,
 		DWM_TNP_SOURCECLIENTAREAONLY = 0x00000010,
 	}
-	
+
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct PSIZE
 	{
