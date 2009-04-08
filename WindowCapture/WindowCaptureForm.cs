@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace RecycleBin.WindowCapture
 {
@@ -168,6 +170,63 @@ namespace RecycleBin.WindowCapture
 		{
 			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
 			hideWindowBorderToolStripMenuItem.Checked = panel.ClientAreaOnly;
+		}
+
+		private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (saveImageFileDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				string path = saveImageFileDialog.FileName;
+
+				// DrawToBitmap は DMW が描画したウィンドウをキャプチャしてくれないので
+				// 対象とする領域のみスクリーンキャプチャを行う。
+				// あくまでスクリーンキャプチャなのでウィンドウより前面に別のウィンドウがあればそれが前面に描画されてしまう。
+				// また，スクリーンからはみ出た領域についてはキャプチャできない。
+				Rectangle visibleBounds = GetVisibleBounds(ClientRectangle);
+				using (Bitmap bitmap = new Bitmap(visibleBounds.Width, visibleBounds.Height))
+				using (Graphics g = Graphics.FromImage(bitmap))
+				{
+					g.CopyFromScreen(visibleBounds.X, visibleBounds.Y, 0, 0, bitmap.Size);
+					bitmap.Save(path, GetImageFormatFromExtension(path));
+				}
+			}
+		}
+
+		private static ImageFormat GetImageFormatFromExtension(string path)
+		{
+			switch (Path.GetExtension(path).ToLower())
+			{
+				case ".png":
+					return ImageFormat.Png;
+				case ".jpg":
+					return ImageFormat.Jpeg;
+				case ".bmp":
+					return ImageFormat.Bmp;
+				default:
+					return ImageFormat.Png;
+			}
+		}
+
+		private Rectangle GetVisibleBounds(Rectangle rectangle)
+		{
+			using (Graphics g = CreateGraphics())
+			{
+				Region visibleRegion = new Region();
+				visibleRegion.MakeEmpty();
+				foreach (Screen screen in Screen.AllScreens)
+				{
+					visibleRegion.Union(screen.Bounds);
+				}
+				visibleRegion.Intersect(RectangleToScreen(rectangle));
+
+				RectangleF savedRegion = visibleRegion.GetBounds(g);
+				return new Rectangle(
+					(int)savedRegion.X,
+					(int)savedRegion.Y,
+					(int)Math.Ceiling(savedRegion.Width),
+					(int)Math.Ceiling(savedRegion.Height)
+				);
+			}
 		}
 	}
 }
