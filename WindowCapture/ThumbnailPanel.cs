@@ -111,7 +111,7 @@ namespace RecycleBin.WindowCapture
 				{
 					while (Process.GetProcesses().Any(process => process.MainWindowHandle == windowHandle))
 					{
-						Thread.Sleep(100);
+						Application.DoEvents();
 					}
 					Dispose(true);
 				}
