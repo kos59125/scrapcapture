@@ -124,6 +124,11 @@
   <ItemGroup>
     <None Include="Properties\app.manifest" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WindowCaptureForm.resx">
+      <DependentUpon>WindowCaptureForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

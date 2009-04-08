@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace RecycleBin.WindowCapture
 {
@@ -161,6 +162,12 @@ namespace RecycleBin.WindowCapture
 			{
 				panel.Dispose();
 			}
+		}
+
+		private void panelContextMenuStrip_Opening(object sender, CancelEventArgs e)
+		{
+			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
+			hideWindowBorderToolStripMenuItem.Checked = panel.ClientAreaOnly;
 		}
 	}
 }
