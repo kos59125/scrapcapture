@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace RecycleBin.WindowCapture
 {
@@ -21,13 +22,25 @@ namespace RecycleBin.WindowCapture
 		public ThumbnailPanel()
 		{
 			scale = 1;
+#if DEBUG
+			BackColor = Color.Black;
+#endif
 		}
 
 		public Size SourceSize
 		{
 			get
 			{
-				return DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
+				RECT rect;
+				if (ClientAreaOnly)
+				{
+					GetClientRect(windowHandle, out rect);
+				}
+				else
+				{
+					GetWindowRect(windowHandle, out rect);
+				}
+				return rect.Size;
 			}
 		}
 
@@ -78,7 +91,8 @@ namespace RecycleBin.WindowCapture
 			set
 			{
 				clientAreaOnly = value;
-				Size = DrawnSize;
+				Size = SourceSize;
+				ResetDrawnRegion();
 				UpdateThubmnail();
 			}
 		}
@@ -226,5 +240,10 @@ namespace RecycleBin.WindowCapture
 				Location = new Point(this.Location.X + e.X - mousePoint.X, this.Location.Y + e.Y - mousePoint.Y);
 			}
 		}
+
+		[DllImport("user32.dll")]
+		private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+		[DllImport("user32.dll")]
+		private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 	}
 }
