@@ -183,11 +183,18 @@ namespace RecycleBin.WindowCapture
 				// あくまでスクリーンキャプチャなのでウィンドウより前面に別のウィンドウがあればそれが前面に描画されてしまう。
 				// また，スクリーンからはみ出た領域についてはキャプチャできない。
 				Rectangle visibleBounds = GetVisibleBounds(ClientRectangle);
-				using (Bitmap bitmap = new Bitmap(visibleBounds.Width, visibleBounds.Height))
-				using (Graphics g = Graphics.FromImage(bitmap))
+				if (visibleBounds.IsEmpty)
 				{
-					g.CopyFromScreen(visibleBounds.X, visibleBounds.Y, 0, 0, bitmap.Size);
-					bitmap.Save(path, GetImageFormatFromExtension(path));
+					MessageBox.Show("スクリーンに表示された領域が存在しないためキャプチャできません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				else
+				{
+					using (Bitmap bitmap = new Bitmap(visibleBounds.Width, visibleBounds.Height))
+					using (Graphics g = Graphics.FromImage(bitmap))
+					{
+						g.CopyFromScreen(visibleBounds.X, visibleBounds.Y, 0, 0, bitmap.Size);
+						bitmap.Save(path, GetImageFormatFromExtension(path));
+					}
 				}
 			}
 		}
