@@ -103,5 +103,13 @@ namespace RecycleBin.WindowCapture
 			Right = rectangle.Right;
 			Bottom = rectangle.Bottom;
 		}
+
+		public Size Size
+		{
+			get
+			{
+				return new Size(Right - Left, Bottom - Top);
+			}
+		}
 	}
 }
