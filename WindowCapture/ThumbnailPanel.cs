@@ -10,6 +10,8 @@ namespace RecycleBin.WindowCapture
 {
 	public class ThumbnailPanel : Control
 	{
+		public event EventHandler SourceSizeChanged;
+
 		private IntPtr thumbnail;
 		private IntPtr windowHandle;
 		private Thread observer;
@@ -81,9 +83,7 @@ namespace RecycleBin.WindowCapture
 			set
 			{
 				clientAreaOnly = value;
-				Size = SourceSize;
-				ResetDrawnRegion();
-				UpdateThubmnail();
+				OnSourceSizeChanged(EventArgs.Empty);
 			}
 		}
 
@@ -113,8 +113,16 @@ namespace RecycleBin.WindowCapture
 			observer = new Thread(new ThreadStart(
 				() =>
 				{
+					Size sourceSize = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
 					while (Process.GetProcesses().Any(process => process.MainWindowHandle == windowHandle))
 					{
+						Size size = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
+						if (!sourceSize.Equals(size))
+						{
+							sourceSize = size;
+							OnSourceSizeChanged(EventArgs.Empty);
+						}
+
 						Application.DoEvents();
 					}
 					Dispose(true);
@@ -166,12 +174,31 @@ namespace RecycleBin.WindowCapture
 			}
 		}
 
-		private delegate void DisposeCallback(bool disposing);
+		protected virtual void OnSourceSizeChanged(EventArgs e)
+		{
+			if (InvokeRequired)
+			{
+				Action<EventArgs> callback = new Action<EventArgs>(OnSourceSizeChanged);
+				Invoke(callback, e);
+			}
+			else
+			{
+				Size = SourceSize;
+				ResetDrawnRegion();
+				UpdateThubmnail();
+
+				if (SourceSizeChanged != null)
+				{
+					SourceSizeChanged(this, e);
+				}
+			}
+		}
+
 		protected override void Dispose(bool disposing)
 		{
 			if (InvokeRequired)
 			{
-				DisposeCallback callback = new DisposeCallback(Dispose);
+				Action<bool> callback = new Action<bool>(Dispose);
 				Invoke(callback, disposing);
 			}
 			else
