@@ -194,12 +194,11 @@ namespace RecycleBin.WindowCapture
 			}
 		}
 
-		private delegate void DisposeCallback(bool disposing);
 		protected override void Dispose(bool disposing)
 		{
 			if (InvokeRequired)
 			{
-				DisposeCallback callback = new DisposeCallback(Dispose);
+				Action<bool> callback = new Action<bool>(Dispose);
 				Invoke(callback, disposing);
 			}
 			else
