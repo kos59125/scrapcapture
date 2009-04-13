@@ -96,10 +96,33 @@ namespace RecycleBin.WindowCapture
 			}
 		}
 
+		public bool IsWindowSet
+		{
+			get
+			{
+				return windowHandle != IntPtr.Zero;
+			}
+		}
+
 		public void SetWindow(IntPtr windowHandle)
 		{
-			this.windowHandle = windowHandle;
+			UnsetWindow();
 
+			if (windowHandle != IntPtr.Zero)
+			{
+				this.windowHandle = windowHandle;
+
+				thumbnail = DesktopWindowManager.Register(FindForm(), windowHandle);
+				windowObserver.RunWorkerAsync();
+
+				ResetDrawnRegion();
+				UpdateThubmnail();
+			}
+		}
+
+		public void UnsetWindow()
+		{
+			windowHandle = IntPtr.Zero;
 			if (windowObserver.IsBusy)
 			{
 				windowObserver.CancelAsync();
@@ -109,12 +132,6 @@ namespace RecycleBin.WindowCapture
 				DesktopWindowManager.Unregister(thumbnail);
 				thumbnail = IntPtr.Zero;
 			}
-
-			thumbnail = DesktopWindowManager.Register(FindForm(), windowHandle);
-			windowObserver.RunWorkerAsync();
-
-			ResetDrawnRegion();
-			UpdateThubmnail();
 		}
 
 		public void ResetDrawnRegion()
@@ -179,12 +196,8 @@ namespace RecycleBin.WindowCapture
 
 		protected override void Dispose(bool disposing)
 		{
+			UnsetWindow();
 			base.Dispose(disposing);
-			if (thumbnail != IntPtr.Zero)
-			{
-				DesktopWindowManager.Unregister(thumbnail);
-				thumbnail = IntPtr.Zero;
-			}
 		}
 
 		protected override void OnLocationChanged(EventArgs e)
