@@ -253,8 +253,6 @@ namespace RecycleBin.WindowCapture
 					sourceSize = size;
 					OnSourceSizeChanged(EventArgs.Empty);
 				}
-
-				Application.DoEvents();
 			}
 		}
 
