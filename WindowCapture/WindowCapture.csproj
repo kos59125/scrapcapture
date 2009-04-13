@@ -125,6 +125,9 @@
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ThumbnailPanel.resx">
+      <DependentUpon>ThumbnailPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WindowCaptureForm.resx">
       <DependentUpon>WindowCaptureForm.cs</DependentUpon>
     </EmbeddedResource>

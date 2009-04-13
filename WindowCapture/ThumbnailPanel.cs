@@ -14,14 +14,15 @@ namespace RecycleBin.WindowCapture
 
 		private IntPtr thumbnail;
 		private IntPtr windowHandle;
-		private Thread observer;
 		private Point mousePoint;
 		private Rectangle drawnRegion;
 		private float scale;
+		private BackgroundWorker windowObserver;
 		private bool clientAreaOnly;
 
 		public ThumbnailPanel()
 		{
+			InitializeComponent();
 			scale = 1;
 #if DEBUG
 			BackColor = Color.Black;
@@ -99,9 +100,9 @@ namespace RecycleBin.WindowCapture
 		{
 			this.windowHandle = windowHandle;
 
-			if (observer != null)
+			if (windowObserver.IsBusy)
 			{
-				observer.Abort();
+				windowObserver.CancelAsync();
 			}
 			if (thumbnail != IntPtr.Zero)
 			{
@@ -110,25 +111,7 @@ namespace RecycleBin.WindowCapture
 			}
 
 			thumbnail = DesktopWindowManager.Register(FindForm(), windowHandle);
-			observer = new Thread(new ThreadStart(
-				() =>
-				{
-					Size sourceSize = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
-					while (Process.GetProcesses().Any(process => process.MainWindowHandle == windowHandle))
-					{
-						Size size = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
-						if (!sourceSize.Equals(size))
-						{
-							sourceSize = size;
-							OnSourceSizeChanged(EventArgs.Empty);
-						}
-
-						Application.DoEvents();
-					}
-					Dispose(true);
-				}
-			));
-			observer.Start();
+			windowObserver.RunWorkerAsync();
 
 			ResetDrawnRegion();
 			UpdateThubmnail();
@@ -196,23 +179,11 @@ namespace RecycleBin.WindowCapture
 
 		protected override void Dispose(bool disposing)
 		{
-			if (InvokeRequired)
+			base.Dispose(disposing);
+			if (thumbnail != IntPtr.Zero)
 			{
-				Action<bool> callback = new Action<bool>(Dispose);
-				Invoke(callback, disposing);
-			}
-			else
-			{
-				if (observer != null && observer.IsAlive)
-				{
-					observer.Abort();
-				}
-				if (thumbnail != IntPtr.Zero)
-				{
-					DesktopWindowManager.Unregister(thumbnail);
-					thumbnail = IntPtr.Zero;
-				}
-				base.Dispose(disposing);
+				DesktopWindowManager.Unregister(thumbnail);
+				thumbnail = IntPtr.Zero;
 			}
 		}
 
@@ -255,6 +226,43 @@ namespace RecycleBin.WindowCapture
 			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
 			{
 				Location = new Point(this.Location.X + e.X - mousePoint.X, this.Location.Y + e.Y - mousePoint.Y);
+			}
+		}
+
+		private void InitializeComponent()
+		{
+			this.windowObserver = new System.ComponentModel.BackgroundWorker();
+			this.SuspendLayout();
+			// 
+			// windowObserver
+			// 
+			this.windowObserver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.windowObserver_DoWork);
+			this.windowObserver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.windowObserver_RunWorkerCompleted);
+			this.ResumeLayout(false);
+
+		}
+
+		private void windowObserver_DoWork(object sender, DoWorkEventArgs e)
+		{
+			Size sourceSize = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
+			while (Process.GetProcesses().Any(process => process.MainWindowHandle == windowHandle))
+			{
+				Size size = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
+				if (!sourceSize.Equals(size))
+				{
+					sourceSize = size;
+					OnSourceSizeChanged(EventArgs.Empty);
+				}
+
+				Application.DoEvents();
+			}
+		}
+
+		private void windowObserver_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			if (!e.Cancelled)
+			{
+				Dispose(true);
 			}
 		}
 	}
