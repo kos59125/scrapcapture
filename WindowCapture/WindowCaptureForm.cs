@@ -90,13 +90,7 @@ namespace RecycleBin.WindowCapture
 				{
 					ToolStripMenuItem windowItem = new ToolStripMenuItem(windowTitle);
 					windowItem.Click += (eventSender, eventArgs) => CaptureWindow(windowHandle);
-					// アイコンの取得
-					SHFILEINFO info = new SHFILEINFO();
-					IntPtr hSuccess = SHGetFileInfo(process.MainModule.FileName, 0, ref info, (uint)Marshal.SizeOf(info), 0x101 /* 小サイズのアイコン */);
-					if (hSuccess != IntPtr.Zero)
-					{
-						windowItem.Image = Icon.FromHandle(info.hIcon).ToBitmap();
-					}
+					windowItem.Image = Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToBitmap();
 					items.Add(windowItem);
 				}
 			}
@@ -114,20 +108,6 @@ namespace RecycleBin.WindowCapture
 			panel.SetWindow(windowHandle);
 			panel.BringToFront();
 		}
-
-		[DllImport("shell32.dll")]
-		private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, uint uFlags);
-
-		private struct SHFILEINFO
-		{
-			public IntPtr hIcon;
-			public IntPtr iIcon;
-			public uint dwAttributes;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			public string szDisplayName;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-			public string szTypeName;
-		};
 
 		private void adjustWindowToolStripMenuItem_Click(object sender, EventArgs e)
 		{
