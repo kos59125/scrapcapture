@@ -249,6 +249,7 @@ namespace RecycleBin.WindowCapture
 			// 
 			// windowObserver
 			// 
+			this.windowObserver.WorkerSupportsCancellation = true;
 			this.windowObserver.DoWork += new System.ComponentModel.DoWorkEventHandler(this.windowObserver_DoWork);
 			this.windowObserver.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.windowObserver_RunWorkerCompleted);
 			this.ResumeLayout(false);
