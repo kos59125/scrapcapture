@@ -32,6 +32,7 @@
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.addWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.adjustWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.topMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -41,7 +42,6 @@
 			this.hideWindowBorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveImageFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.contextMenuStrip.SuspendLayout();
 			this.panelContextMenuStrip.SuspendLayout();
@@ -74,6 +74,14 @@
 			this.adjustWindowToolStripMenuItem.Size = new System.Drawing.Size(385, 22);
 			this.adjustWindowToolStripMenuItem.Text = "ウィンドウサイズをクライアントに合わせる (&A)";
 			this.adjustWindowToolStripMenuItem.Click += new System.EventHandler(this.adjustWindowToolStripMenuItem_Click);
+			// 
+			// saveImageToolStripMenuItem
+			// 
+			this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+			this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+			this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(385, 22);
+			this.saveImageToolStripMenuItem.Text = "画像に保存する (&S)";
+			this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
@@ -137,14 +145,6 @@
 			this.removeToolStripMenuItem.Text = "削除 (&X)";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
-			// saveImageToolStripMenuItem
-			// 
-			this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-			this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(385, 22);
-			this.saveImageToolStripMenuItem.Text = "画像に保存する (&S)";
-			this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.saveImageToolStripMenuItem_Click);
-			// 
 			// saveImageFileDialog
 			// 
 			this.saveImageFileDialog.DefaultExt = "png";
@@ -154,7 +154,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.SystemColors.Control;
+			this.BackColor = System.Drawing.Color.White;
 			this.ClientSize = new System.Drawing.Size(464, 323);
 			this.ContextMenuStrip = this.contextMenuStrip;
 			this.Cursor = System.Windows.Forms.Cursors.Default;
