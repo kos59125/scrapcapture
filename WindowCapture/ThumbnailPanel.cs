@@ -11,6 +11,7 @@ namespace RecycleBin.WindowCapture
 	public class ThumbnailPanel : Control
 	{
 		public event EventHandler SourceSizeChanged;
+		public event EventHandler SourceWindowChanged;
 
 		private IntPtr thumbnail;
 		private IntPtr windowHandle;
@@ -108,15 +109,14 @@ namespace RecycleBin.WindowCapture
 		{
 			UnsetWindow();
 
-			if (windowHandle != IntPtr.Zero)
+			if (windowHandle != IntPtr.Zero && DesktopWindowManager.IsCompositionEnabled)
 			{
 				this.windowHandle = windowHandle;
 
 				thumbnail = DesktopWindowManager.Register(FindForm(), windowHandle);
 				windowObserver.RunWorkerAsync();
 
-				ResetDrawnRegion();
-				UpdateThubmnail();
+				OnSourceWindowChanged(EventArgs.Empty);
 			}
 		}
 
@@ -132,6 +132,8 @@ namespace RecycleBin.WindowCapture
 				DesktopWindowManager.Unregister(thumbnail);
 				thumbnail = IntPtr.Zero;
 			}
+
+			OnSourceWindowChanged(EventArgs.Empty);
 		}
 
 		public void ResetDrawnRegion()
@@ -169,7 +171,10 @@ namespace RecycleBin.WindowCapture
 				};
 				if (!DesktopWindowManager.Update(thumbnail, ref properties))
 				{
-					MessageBox.Show("サムネイルの更新に失敗しました。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					if (MessageBox.Show("サムネイルの更新に失敗しました。", "エラー", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) != DialogResult.Retry)
+					{
+						UnsetWindow();
+					}
 				}
 			}
 		}
@@ -191,6 +196,17 @@ namespace RecycleBin.WindowCapture
 				{
 					SourceSizeChanged(this, e);
 				}
+			}
+		}
+
+		protected virtual void OnSourceWindowChanged(EventArgs e)
+		{
+			ResetDrawnRegion();
+			UpdateThubmnail();
+
+			if (SourceWindowChanged != null)
+			{
+				SourceWindowChanged(this, e);
 			}
 		}
 

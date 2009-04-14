@@ -9,6 +9,14 @@ namespace RecycleBin.WindowCapture
 	{
 		private const int S_OK = 0;
 
+		public static bool IsCompositionEnabled
+		{
+			get
+			{
+				return DwmIsCompositionEnabled();
+			}
+		}
+
 		public static IntPtr Register(Form form, IntPtr source)
 		{
 			IntPtr thumbnail;
@@ -45,6 +53,8 @@ namespace RecycleBin.WindowCapture
 		private static extern int DwmQueryThumbnailSourceSize(IntPtr hThumbnail, out PSIZE pSize);
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
+		[DllImport("dwmapi.dll")]
+		private static extern bool DwmIsCompositionEnabled();
 	}
 
 	[Flags]
@@ -60,12 +70,12 @@ namespace RecycleBin.WindowCapture
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct PSIZE
 	{
-		public int Width;
-		public int Height;
+		public int cx;
+		public int cy;
 
 		public Size ToSize()
 		{
-			return new Size(Width, Height);
+			return new Size(cx, cy);
 		}
 	}
 
