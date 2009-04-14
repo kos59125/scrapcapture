@@ -13,7 +13,12 @@ namespace RecycleBin.WindowCapture
 		{
 			get
 			{
-				return DwmIsCompositionEnabled();
+				bool enabled;
+				if (DwmIsCompositionEnabled(out enabled) == S_OK)
+				{
+					return enabled;
+				}
+				return false;
 			}
 		}
 
@@ -54,7 +59,7 @@ namespace RecycleBin.WindowCapture
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
 		[DllImport("dwmapi.dll")]
-		private static extern bool DwmIsCompositionEnabled();
+		private static extern int DwmIsCompositionEnabled(out bool pfEnabled);
 	}
 
 	[Flags]
