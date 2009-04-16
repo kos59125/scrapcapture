@@ -22,6 +22,14 @@ namespace RecycleBin.WindowCapture
 			NoSelectionItem = new ToolStripMenuItem("ウィンドウが見つかりません");
 			NoSelectionItem.Enabled = false;
 			addWindowsToolStripMenuItem.DropDownItems.Add(NoSelectionItem);
+
+#if DEBUG
+			ToolStripMenuItem dwmCompositionEnabledItem = new ToolStripMenuItem("DMW コンポジションを無効にする");
+			dwmCompositionEnabledItem.CheckOnClick = true;
+			dwmCompositionEnabledItem.CheckedChanged += (sender, e) => DesktopWindowManager.DwmEnableComposition(!dwmCompositionEnabledItem.Checked);
+			ContextMenuStrip.Items.Add(new ToolStripSeparator());
+			ContextMenuStrip.Items.Add(dwmCompositionEnabledItem);
+#endif
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)

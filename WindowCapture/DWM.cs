@@ -60,6 +60,11 @@ namespace RecycleBin.WindowCapture
 		private static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmIsCompositionEnabled(out bool pfEnabled);
+
+#if DEBUG
+		[DllImport("dwmapi.dll", PreserveSig = false)]
+		public static extern void DwmEnableComposition(bool uCompositionAction);
+#endif
 	}
 
 	[Flags]
