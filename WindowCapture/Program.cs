@@ -19,7 +19,7 @@ namespace RecycleBin.WindowCapture
 				ValidatePlatform();
 				LaunchApplication();
 			}
-			catch (PlatformNotSupportedException ex)
+			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Application.Exit();
