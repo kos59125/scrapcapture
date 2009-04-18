@@ -198,6 +198,7 @@ namespace RecycleBin.WindowCapture
 				}
 				else
 				{
+					BringToFront();
 					using (Bitmap bitmap = new Bitmap(visibleBounds.Width, visibleBounds.Height))
 					using (Graphics g = Graphics.FromImage(bitmap))
 					{
