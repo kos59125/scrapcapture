@@ -237,27 +237,6 @@ namespace RecycleBin.WindowCapture
 			UpdateThubmnail();
 		}
 
-		protected override void OnMouseDown(MouseEventArgs e)
-		{
-			base.OnMouseDown(e);
-
-			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-			{
-				mousePoint = e.Location;
-				this.BringToFront();
-			}
-		}
-
-		protected override void OnMouseMove(MouseEventArgs e)
-		{
-			base.OnMouseMove(e);
-
-			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-			{
-				Location = new Point(this.Location.X + e.X - mousePoint.X, this.Location.Y + e.Y - mousePoint.Y);
-			}
-		}
-
 		private void InitializeComponent()
 		{
 			this.windowObserver = new System.ComponentModel.BackgroundWorker();

@@ -12,6 +12,7 @@ namespace RecycleBin.WindowCapture
 	public partial class WindowCaptureForm : Form
 	{
 		private readonly ToolStripMenuItem NoSelectionItem;
+		private Point mouseLocation;
 
 		public WindowCaptureForm()
 		{
@@ -112,9 +113,29 @@ namespace RecycleBin.WindowCapture
 		{
 			ThumbnailPanel panel = new ThumbnailPanel();
 			panel.ContextMenuStrip = panelContextMenuStrip;
+			RegisterMouseEventHandler(panel);
 			Controls.Add(panel);
 			panel.SetWindow(windowHandle);
 			panel.BringToFront();
+		}
+
+		private void RegisterMouseEventHandler(ThumbnailPanel panel)
+		{
+			panel.MouseDown += (sender, e) =>
+			{
+				if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+				{
+					mouseLocation = e.Location;
+					panel.BringToFront();
+				}
+			};
+			panel.MouseMove += (sender, e) =>
+			{
+				if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+				{
+					panel.Location = new Point(panel.Location.X + e.X - mouseLocation.X, panel.Location.Y + e.Y - mouseLocation.Y);
+				}
+			};
 		}
 
 		private void adjustWindowToolStripMenuItem_Click(object sender, EventArgs e)
