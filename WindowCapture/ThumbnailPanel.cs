@@ -15,7 +15,6 @@ namespace RecycleBin.WindowCapture
 
 		private IntPtr thumbnail;
 		private IntPtr windowHandle;
-		private Point mousePoint;
 		private Rectangle drawnRegion;
 		private float scale;
 		private BackgroundWorker windowObserver;
