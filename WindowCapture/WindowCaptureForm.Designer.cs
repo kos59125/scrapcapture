@@ -43,6 +43,7 @@
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveImageFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.panelRegionSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip.SuspendLayout();
 			this.panelContextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -119,10 +120,11 @@
 			// 
 			this.panelContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hideWindowBorderToolStripMenuItem,
+            this.panelRegionSelectionToolStripMenuItem,
             this.toolStripSeparator3,
             this.removeToolStripMenuItem});
 			this.panelContextMenuStrip.Name = "contextMenuStrip";
-			this.panelContextMenuStrip.Size = new System.Drawing.Size(244, 54);
+			this.panelContextMenuStrip.Size = new System.Drawing.Size(244, 98);
 			this.panelContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.panelContextMenuStrip_Opening);
 			// 
 			// hideWindowBorderToolStripMenuItem
@@ -149,6 +151,13 @@
 			// 
 			this.saveImageFileDialog.DefaultExt = "png";
 			this.saveImageFileDialog.Filter = "PNG ファイル (*.png)|*.png|JPEG ファイル (*.jpg)|*.jpg|Bitmap ファイル (*.bmp)|*.bmp";
+			// 
+			// panelRegionSelectionToolStripMenuItem
+			// 
+			this.panelRegionSelectionToolStripMenuItem.Name = "panelRegionSelectionToolStripMenuItem";
+			this.panelRegionSelectionToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+			this.panelRegionSelectionToolStripMenuItem.Text = "描画領域を選択 (&R)";
+			this.panelRegionSelectionToolStripMenuItem.Click += new System.EventHandler(this.panelRegionSelectionToolStripMenuItem_Click);
 			// 
 			// WindowCaptureForm
 			// 
@@ -182,6 +191,7 @@
 		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
 		private System.Windows.Forms.SaveFileDialog saveImageFileDialog;
+		private System.Windows.Forms.ToolStripMenuItem panelRegionSelectionToolStripMenuItem;
 	}
 }
 

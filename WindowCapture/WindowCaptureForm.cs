@@ -245,5 +245,20 @@ namespace RecycleBin.WindowCapture
 				);
 			}
 		}
+
+		private void panelRegionSelectionToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
+			RegionSelector selector = new RegionSelector();
+			selector.Load += (eventSender, eventArgs) =>
+			{
+				selector.SetWindow(panel.GetWindow());
+				selector.DrawnRegion = panel.DrawnRegion;
+			};
+			if (selector.ShowDialog(this) == DialogResult.OK)
+			{
+				panel.DrawnRegion = selector.DrawnRegion;
+			}
+		}
 	}
 }

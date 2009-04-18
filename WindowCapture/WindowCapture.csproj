@@ -77,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DWM.cs" />
+    <Compile Include="RegionSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegionSelector.Designer.cs">
+      <DependentUpon>RegionSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThumbnailPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="RegionSelector.resx">
+      <DependentUpon>RegionSelector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ThumbnailPanel.resx">
       <DependentUpon>ThumbnailPanel.cs</DependentUpon>
     </EmbeddedResource>

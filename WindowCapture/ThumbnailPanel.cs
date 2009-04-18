@@ -135,6 +135,11 @@ namespace RecycleBin.WindowCapture
 			OnSourceWindowChanged(EventArgs.Empty);
 		}
 
+		internal protected IntPtr GetWindow()
+		{
+			return windowHandle;
+		}
+
 		public void ResetDrawnRegion()
 		{
 			if (thumbnail != IntPtr.Zero)
