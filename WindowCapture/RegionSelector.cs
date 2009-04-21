@@ -12,7 +12,7 @@ namespace RecycleBin.WindowCapture
 	public partial class RegionSelector : Form
 	{
 		private Rectangle drawnRegion;
-		private Form cover;
+		private Cover cover;
 		private Point? mouseLocation;
 
 		public RegionSelector()
@@ -35,32 +35,24 @@ namespace RecycleBin.WindowCapture
 			set
 			{
 				drawnRegion = value;
-				DrawFrame();
+				UpdateCover();
 			}
 		}
 
 		public void ResetDrawnRegion()
 		{
 			DrawnRegion = new Rectangle(Point.Empty, thumbnailPanel.DrawnSize);
-			DrawFrame();
+			UpdateCover();
 		}
 
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 
-			cover = new Form();
-			cover.SuspendLayout();
-			cover.FormBorderStyle = FormBorderStyle.None;
-			cover.BackColor = Color.Black;
-			cover.TransparencyKey = cover.BackColor;
-			cover.ShowIcon = false;
-			cover.ShowInTaskbar = false;
-			cover.ResumeLayout(true);
+			cover = new Cover();
+			cover.FrameColor = Color.Lime;
 			cover.Show(this);
 			UpdateCover();
-
-			DrawFrame();
 		}
 
 		protected override void OnFormClosed(FormClosedEventArgs e)
@@ -68,16 +60,6 @@ namespace RecycleBin.WindowCapture
 			thumbnailPanel.UnsetWindow();
 			cover.Close();
 			base.OnFormClosed(e);
-		}
-
-		protected override void OnVisibleChanged(EventArgs e)
-		{
-			base.OnVisibleChanged(e);
-
-			if (Visible)
-			{
-				DrawFrame();
-			}
 		}
 
 		protected override void OnLocationChanged(EventArgs e)
@@ -102,26 +84,17 @@ namespace RecycleBin.WindowCapture
 
 		private void UpdateCover()
 		{
-			cover.Bounds = RectangleToScreen(thumbnailPanel.Bounds);
+			if (cover != null)
+			{
+				cover.Bounds = RectangleToScreen(drawnRegion);
+				cover.Refresh();
+			}
 		}
 
 		private void UpdateSize()
 		{
 			Size thumbnailSize = thumbnailPanel.DrawnSize;
 			ClientSize = new Size(thumbnailSize.Width, thumbnailSize.Height + statusStrip.Height);
-		}
-
-		private void DrawFrame()
-		{
-			if (cover != null)
-			{
-				Rectangle frame = new Rectangle(DrawnRegion.X, DrawnRegion.Y, DrawnRegion.Width - 1, DrawnRegion.Height - 1);
-				using (Graphics g = cover.CreateGraphics())
-				{
-					cover.Refresh();
-					g.DrawRectangle(Pens.Lime, frame);
-				}
-			}
 		}
 
 		private void thumbnailPanel_SourceWindowChanged(object sender, EventArgs e)
