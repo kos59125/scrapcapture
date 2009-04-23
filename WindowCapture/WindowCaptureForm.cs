@@ -91,17 +91,25 @@ namespace RecycleBin.WindowCapture
 		{
 			ToolStripItemCollection items = addWindowsToolStripMenuItem.DropDownItems;
 			items.Clear();
-			foreach (Process process in Process.GetProcesses())
+			foreach (ApplicationWindow window in ApplicationWindow.GetApplicationWindows())
 			{
-				IntPtr windowHandle = process.MainWindowHandle;
-				string windowTitle = process.MainWindowTitle;
-				if (windowHandle != IntPtr.Zero && windowHandle != this.Handle && windowTitle != string.Empty)
+				if (window.Handle == this.Handle)
 				{
-					ToolStripMenuItem windowItem = new ToolStripMenuItem(windowTitle);
-					windowItem.Click += (eventSender, eventArgs) => CaptureWindow(windowHandle);
-					windowItem.Image = Icon.ExtractAssociatedIcon(process.MainModule.FileName).ToBitmap();
-					items.Add(windowItem);
+					continue;
 				}
+
+				Process process = Process.GetProcessById(window.ProcessId);
+				IntPtr handle = window.Handle;
+				string title = window.Text;
+				Icon icon = window.Icon;
+
+				ToolStripMenuItem windowItem = new ToolStripMenuItem(title);
+				windowItem.Click += (eventSender, eventArgs) => CaptureWindow(handle);
+				if (icon != null)
+				{
+					windowItem.Image = icon.ToBitmap();
+				}
+				items.Add(windowItem);
 			}
 			if (items.Count == 0)
 			{
