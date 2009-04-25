@@ -3,8 +3,6 @@ using System.Linq;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
-using System.Diagnostics;
 
 namespace RecycleBin.ScrapCapture
 {
@@ -145,6 +143,42 @@ namespace RecycleBin.ScrapCapture
 			if (thumbnail != IntPtr.Zero)
 			{
 				DrawnRegion = new Rectangle(Point.Empty, SourceSize);
+			}
+		}
+
+		public Image CaptureCurrentImage()
+		{
+			Rectangle bounds = GetVisibleBounds(ClientRectangle);
+			Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height);
+			using (Graphics g = Graphics.FromImage(bitmap))
+			{
+				BringToFront();
+				g.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bitmap.Size);
+			}
+			return bitmap;
+		}
+
+		private Rectangle GetVisibleBounds(Rectangle rectangle)
+		{
+			using (Graphics g = CreateGraphics())
+			{
+				Region visibleRegion = new Region();
+				visibleRegion.MakeEmpty();
+				foreach (Screen screen in Screen.AllScreens)
+				{
+					visibleRegion.Union(screen.Bounds);
+				}
+				Form parentForm = FindForm();
+				visibleRegion.Intersect(parentForm.RectangleToScreen(parentForm.ClientRectangle));
+				visibleRegion.Intersect(RectangleToScreen(rectangle));
+
+				RectangleF savedRegion = visibleRegion.GetBounds(g);
+				return new Rectangle(
+					(int)savedRegion.X,
+					(int)savedRegion.Y,
+					(int)Math.Ceiling(savedRegion.Width),
+					(int)Math.Ceiling(savedRegion.Height)
+				);
 			}
 		}
 

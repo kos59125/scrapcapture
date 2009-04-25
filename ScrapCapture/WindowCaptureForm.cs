@@ -173,6 +173,15 @@ namespace RecycleBin.ScrapCapture
 			panel.ClientAreaOnly = hideWindowBorderToolStripMenuItem.Checked;
 		}
 
+		private void clipboardToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
+			using (Image image = panel.CaptureCurrentImage())
+			{
+				Clipboard.SetImage(image);
+			}
+		}
+
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Control panel = panelContextMenuStrip.SourceControl;

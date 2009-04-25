@@ -40,10 +40,11 @@
 			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.panelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.hideWindowBorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.panelRegionSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveImageFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.panelRegionSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip.SuspendLayout();
 			this.panelContextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -121,29 +122,37 @@
 			this.panelContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hideWindowBorderToolStripMenuItem,
             this.panelRegionSelectionToolStripMenuItem,
+            this.clipboardToolStripMenuItem,
             this.toolStripSeparator3,
             this.removeToolStripMenuItem});
 			this.panelContextMenuStrip.Name = "contextMenuStrip";
-			this.panelContextMenuStrip.Size = new System.Drawing.Size(244, 98);
+			this.panelContextMenuStrip.Size = new System.Drawing.Size(255, 120);
 			this.panelContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.panelContextMenuStrip_Opening);
 			// 
 			// hideWindowBorderToolStripMenuItem
 			// 
 			this.hideWindowBorderToolStripMenuItem.CheckOnClick = true;
 			this.hideWindowBorderToolStripMenuItem.Name = "hideWindowBorderToolStripMenuItem";
-			this.hideWindowBorderToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+			this.hideWindowBorderToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
 			this.hideWindowBorderToolStripMenuItem.Text = "ウィンドウ枠を表示しない (&H)";
 			this.hideWindowBorderToolStripMenuItem.Click += new System.EventHandler(this.hideWindowBorderToolStripMenuItem_Click);
+			// 
+			// panelRegionSelectionToolStripMenuItem
+			// 
+			this.panelRegionSelectionToolStripMenuItem.Name = "panelRegionSelectionToolStripMenuItem";
+			this.panelRegionSelectionToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+			this.panelRegionSelectionToolStripMenuItem.Text = "描画領域を選択 (&R)";
+			this.panelRegionSelectionToolStripMenuItem.Click += new System.EventHandler(this.panelRegionSelectionToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(240, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(251, 6);
 			// 
 			// removeToolStripMenuItem
 			// 
 			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
-			this.removeToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
 			this.removeToolStripMenuItem.Text = "削除 (&X)";
 			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
 			// 
@@ -152,12 +161,12 @@
 			this.saveImageFileDialog.DefaultExt = "png";
 			this.saveImageFileDialog.Filter = "PNG ファイル (*.png)|*.png|JPEG ファイル (*.jpg)|*.jpg|Bitmap ファイル (*.bmp)|*.bmp";
 			// 
-			// panelRegionSelectionToolStripMenuItem
+			// clipboardToolStripMenuItem
 			// 
-			this.panelRegionSelectionToolStripMenuItem.Name = "panelRegionSelectionToolStripMenuItem";
-			this.panelRegionSelectionToolStripMenuItem.Size = new System.Drawing.Size(243, 22);
-			this.panelRegionSelectionToolStripMenuItem.Text = "描画領域を選択 (&R)";
-			this.panelRegionSelectionToolStripMenuItem.Click += new System.EventHandler(this.panelRegionSelectionToolStripMenuItem_Click);
+			this.clipboardToolStripMenuItem.Name = "clipboardToolStripMenuItem";
+			this.clipboardToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+			this.clipboardToolStripMenuItem.Text = "クリップボードにコピーする (&C)";
+			this.clipboardToolStripMenuItem.Click += new System.EventHandler(this.clipboardToolStripMenuItem_Click);
 			// 
 			// WindowCaptureForm
 			// 
@@ -192,6 +201,7 @@
 		private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
 		private System.Windows.Forms.SaveFileDialog saveImageFileDialog;
 		private System.Windows.Forms.ToolStripMenuItem panelRegionSelectionToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clipboardToolStripMenuItem;
 	}
 }
 
