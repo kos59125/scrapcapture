@@ -76,7 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cover.cs">
+    <Compile Include="ApplicationWindow.cs" />    <Compile Include="Cover.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cover.Designer.cs">

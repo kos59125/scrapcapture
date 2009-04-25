@@ -262,7 +262,7 @@ namespace RecycleBin.WindowCapture
 		private void windowObserver_DoWork(object sender, DoWorkEventArgs e)
 		{
 			Size sourceSize = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
-			while (Process.GetProcesses().Any(process => process.MainWindowHandle == windowHandle))
+			while (ApplicationWindow.GetApplicationWindows().Any(window => window.Handle == windowHandle))
 			{
 				Size size = DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
 				if (!sourceSize.Equals(size))
