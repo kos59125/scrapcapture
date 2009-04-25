@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.ComponentModel;
 
 namespace RecycleBin.WindowCapture
@@ -80,23 +79,25 @@ namespace RecycleBin.WindowCapture
 		{
 			ToolStripItemCollection items = addWindowsToolStripMenuItem.DropDownItems;
 			items.Clear();
-			foreach (Process process in Process.GetProcesses())
+			foreach (ApplicationWindow window in ApplicationWindow.GetApplicationWindows())
 			{
-				IntPtr windowHandle = process.MainWindowHandle;
-				string windowTitle = process.MainWindowTitle;
-				if (windowHandle != IntPtr.Zero && windowHandle != this.Handle && windowTitle != string.Empty)
+				if (window.Handle == this.Handle)
 				{
-					ToolStripMenuItem windowItem = new ToolStripMenuItem(windowTitle);
-					windowItem.Click += (eventSender, eventArgs) => CaptureWindow(windowHandle);
-					// アイコンの取得
-					SHFILEINFO info = new SHFILEINFO();
-					IntPtr hSuccess = SHGetFileInfo(process.MainModule.FileName, 0, ref info, (uint)Marshal.SizeOf(info), 0x101 /* 小サイズのアイコン */);
-					if (hSuccess != IntPtr.Zero)
-					{
-						windowItem.Image = Icon.FromHandle(info.hIcon).ToBitmap();
-					}
-					items.Add(windowItem);
+					continue;
 				}
+
+				Process process = Process.GetProcessById(window.ProcessId);
+				IntPtr handle = window.Handle;
+				string title = window.Text;
+				Icon icon = window.Icon;
+
+				ToolStripMenuItem windowItem = new ToolStripMenuItem(title);
+				windowItem.Click += (eventSender, eventArgs) => CaptureWindow(handle);
+				if (icon != null)
+				{
+					windowItem.Image = icon.ToBitmap();
+				}
+				items.Add(windowItem);
 			}
 			if (items.Count == 0)
 			{
@@ -112,20 +113,6 @@ namespace RecycleBin.WindowCapture
 			panel.SetWindow(windowHandle);
 			panel.BringToFront();
 		}
-
-		[DllImport("shell32.dll")]
-		private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, uint uFlags);
-
-		private struct SHFILEINFO
-		{
-			public IntPtr hIcon;
-			public IntPtr iIcon;
-			public uint dwAttributes;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-			public string szDisplayName;
-			[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-			public string szTypeName;
-		};
 
 		private void adjustWindowToolStripMenuItem_Click(object sender, EventArgs e)
 		{

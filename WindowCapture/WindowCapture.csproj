@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationWindow.cs" />
     <Compile Include="DWM.cs" />
     <Compile Include="ThumbnailPanel.cs">
       <SubType>Component</SubType>
