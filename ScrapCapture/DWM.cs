@@ -40,7 +40,7 @@ namespace RecycleBin.ScrapCapture
 
 		public static Size QueryThumbnailSourceSize(IntPtr thumbnail)
 		{
-			PSIZE size;
+			SIZE size;
 			DwmQueryThumbnailSourceSize(thumbnail, out size);
 			return size.ToSize();
 		}
@@ -55,7 +55,7 @@ namespace RecycleBin.ScrapCapture
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmUnregisterThumbnail(IntPtr hThumbnailId);
 		[DllImport("dwmapi.dll")]
-		private static extern int DwmQueryThumbnailSourceSize(IntPtr hThumbnail, out PSIZE pSize);
+		private static extern int DwmQueryThumbnailSourceSize(IntPtr hThumbnail, out SIZE pSize);
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
 		[DllImport("dwmapi.dll")]
@@ -78,7 +78,7 @@ namespace RecycleBin.ScrapCapture
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct PSIZE
+	internal struct SIZE
 	{
 		public int cx;
 		public int cy;
