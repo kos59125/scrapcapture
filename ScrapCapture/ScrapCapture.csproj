@@ -8,8 +8,8 @@
     <ProjectGuid>{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RecycleBin.WindowCapture</RootNamespace>
-    <AssemblyName>WindowCapture</AssemblyName>
+    <RootNamespace>RecycleBin.ScrapCapture</RootNamespace>
+    <AssemblyName>ScrapCapture</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignManifests>true</SignManifests>
@@ -30,7 +30,7 @@
     <MapFileExtensions>false</MapFileExtensions>
     <InstallUrl>http://repos.recyclebin.jp/capture/publish/</InstallUrl>
     <SupportUrl>http://trac.recyclebin.jp/capture/</SupportUrl>
-    <ProductName>Window Capture</ProductName>
+    <ProductName>Scrap Capture</ProductName>
     <PublisherName>RecycleBin</PublisherName>
     <WebPage>publish.html</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
@@ -76,7 +76,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationWindow.cs" />    <Compile Include="Cover.cs">
+    <Compile Include="ApplicationWindow.cs" />
+    <Compile Include="Cover.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Cover.Designer.cs">

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowCapture", "WindowCapture\WindowCapture.csproj", "{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScrapCapture", "ScrapCapture\ScrapCapture.csproj", "{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RecycleBin.WindowCapture
+namespace RecycleBin.ScrapCapture
 {
 	public partial class RegionSelector : Form
 	{

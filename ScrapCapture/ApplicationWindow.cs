@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace RecycleBin.WindowCapture
+namespace RecycleBin.ScrapCapture
 {
 	internal class ApplicationWindow
 	{

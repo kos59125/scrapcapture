@@ -1,4 +1,4 @@
-﻿namespace RecycleBin.WindowCapture
+﻿namespace RecycleBin.ScrapCapture
 {
 	partial class WindowCaptureForm
 	{

@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace RecycleBin.WindowCapture
+namespace RecycleBin.ScrapCapture
 {
 	internal static class DesktopWindowManager
 	{

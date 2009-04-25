@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace RecycleBin.WindowCapture
+namespace RecycleBin.ScrapCapture
 {
 	public partial class WindowCaptureForm : Form
 	{

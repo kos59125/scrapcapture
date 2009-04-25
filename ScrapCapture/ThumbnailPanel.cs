@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 
-namespace RecycleBin.WindowCapture
+namespace RecycleBin.ScrapCapture
 {
 	public class ThumbnailPanel : Control
 	{

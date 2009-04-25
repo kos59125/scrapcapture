@@ -1,4 +1,4 @@
-﻿namespace RecycleBin.WindowCapture
+﻿namespace RecycleBin.ScrapCapture
 {
 	partial class RegionSelector
 	{
@@ -35,7 +35,7 @@
 			this.okToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.thumbnailPanel = new RecycleBin.WindowCapture.ThumbnailPanel();
+			this.thumbnailPanel = new RecycleBin.ScrapCapture.ThumbnailPanel();
 			this.statusStrip.SuspendLayout();
 			this.contextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
