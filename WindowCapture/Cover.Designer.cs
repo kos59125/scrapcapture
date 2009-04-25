@@ -34,14 +34,15 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Black;
+			this.BackColor = System.Drawing.SystemColors.Highlight;
 			this.ClientSize = new System.Drawing.Size(284, 263);
+			this.ControlBox = false;
+			this.Cursor = System.Windows.Forms.Cursors.SizeAll;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 			this.Name = "Cover";
+			this.Opacity = 0.1;
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
-			this.Text = "Cover";
-			this.TransparencyKey = System.Drawing.Color.Black;
 			this.ResumeLayout(false);
 
 		}

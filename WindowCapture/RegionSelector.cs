@@ -50,9 +50,20 @@ namespace RecycleBin.WindowCapture
 			base.OnLoad(e);
 
 			cover = new Cover();
-			cover.FrameColor = Color.Lime;
+			cover.CoveredControl = thumbnailPanel;
+			cover.SizeChanged += (sender, args) => OnCoverBoundsChanged(args);
+			cover.LocationChanged += (sender, args) => OnCoverBoundsChanged(args);
+			cover.MouseMove += (sender, args) => regionToolStripStatusLabel.Text = string.Format("描画領域: {0}", drawnRegion);
 			cover.Show(this);
 			UpdateCover();
+		}
+
+		private void OnCoverBoundsChanged(EventArgs e)
+		{
+			if (cover.Visible)
+			{
+				drawnRegion = RectangleToClient(cover.Bounds);
+			}
 		}
 
 		protected override void OnFormClosed(FormClosedEventArgs e)
@@ -126,11 +137,11 @@ namespace RecycleBin.WindowCapture
 				{
 					DrawnRegion = rectangle;
 				}
-				regionToolStripStatusLabel.Text = string.Format("{0} -> {1} {2}", mouseLocation, e.Location, GetRectangleFromPoints(mouseLocation.Value, e.Location));
+				regionToolStripStatusLabel.Text = string.Format("描画領域: {0}; 開始点: {1}; 現在の座標: {2}", GetRectangleFromPoints(mouseLocation.Value, e.Location), mouseLocation, e.Location);
 			}
 			else
 			{
-				regionToolStripStatusLabel.Text = e.Location.ToString();
+				regionToolStripStatusLabel.Text = string.Format("描画領域を開始: {0}", e.Location);
 			}
 		}
 
