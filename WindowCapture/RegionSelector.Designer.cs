@@ -32,9 +32,9 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.regionToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.okToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.thumbnailPanel = new RecycleBin.WindowCapture.ThumbnailPanel();
 			this.statusStrip.SuspendLayout();
 			this.contextMenuStrip.SuspendLayout();
@@ -47,8 +47,9 @@
 			this.statusStrip.Location = new System.Drawing.Point(0, 241);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(284, 22);
+			this.statusStrip.SizingGrip = false;
 			this.statusStrip.TabIndex = 0;
-			this.statusStrip.Text = "statusStrip1";
+			this.statusStrip.Text = "statusStrip";
 			// 
 			// regionToolStripStatusLabel
 			// 
@@ -64,13 +65,6 @@
 			this.contextMenuStrip.Name = "contextMenuStrip";
 			this.contextMenuStrip.Size = new System.Drawing.Size(159, 70);
 			// 
-			// resetToolStripMenuItem
-			// 
-			this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-			this.resetToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.resetToolStripMenuItem.Text = "リセット (&R)";
-			this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
-			// 
 			// okToolStripMenuItem
 			// 
 			this.okToolStripMenuItem.Name = "okToolStripMenuItem";
@@ -84,6 +78,13 @@
 			this.cancelToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.cancelToolStripMenuItem.Text = "キャンセル (&C)";
 			this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
+			// 
+			// resetToolStripMenuItem
+			// 
+			this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+			this.resetToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.resetToolStripMenuItem.Text = "リセット (&R)";
+			this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
 			// 
 			// thumbnailPanel
 			// 
