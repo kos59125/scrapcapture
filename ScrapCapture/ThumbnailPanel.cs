@@ -19,6 +19,7 @@ namespace RecycleBin.ScrapCapture
 		private float scale;
 		private BackgroundWorker windowObserver;
 		private bool clientAreaOnly;
+		private bool isFixed;
 
 		public ThumbnailPanel()
 		{
@@ -85,6 +86,37 @@ namespace RecycleBin.ScrapCapture
 			{
 				clientAreaOnly = value;
 				OnSourceSizeChanged(EventArgs.Empty);
+			}
+		}
+
+		public bool IsFixed
+		{
+			get
+			{
+				return isFixed;
+			}
+			set
+			{
+				isFixed = value;
+				UpdateThubmnail();
+				Refresh();
+				if (isFixed)
+				{
+					try
+					{
+						using (Image capture = CaptureCurrentImage())
+						using (Graphics g = CreateGraphics())
+						{
+							g.DrawImage(capture, ClientRectangle);
+						}
+					}
+					catch
+					{
+						isFixed = false;
+						UpdateThubmnail();
+						throw;
+					}
+				}
 			}
 		}
 
@@ -233,7 +265,7 @@ namespace RecycleBin.ScrapCapture
 				{
 					dwFlags = DWM_TNP.DWM_TNP_OPACITY | DWM_TNP.DWM_TNP_RECTDESTINATION | DWM_TNP.DWM_TNP_RECTSOURCE | DWM_TNP.DWM_TNP_SOURCECLIENTAREAONLY | DWM_TNP.DWM_TNP_VISIBLE,
 					fSourceClientAreaOnly = ClientAreaOnly,
-					fVisible = Visible,
+					fVisible = Visible & !IsFixed,
 					opacity = Byte.MaxValue,
 					rcDestination = new RECT(Location, Size),
 					rcSource = new RECT(DrawnRegion)

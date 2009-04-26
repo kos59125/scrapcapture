@@ -189,6 +189,19 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
+		private void fixToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
+		{
+			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
+			try
+			{
+				panel.IsFixed = fixToolStripMenuItem.Checked;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Control panel = panelContextMenuStrip.SourceControl;
@@ -203,6 +216,7 @@ namespace RecycleBin.ScrapCapture
 		{
 			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
 			hideWindowBorderToolStripMenuItem.Checked = panel.ClientAreaOnly;
+			fixToolStripMenuItem.Checked = panel.IsFixed;
 		}
 
 		private void saveImageToolStripMenuItem_Click(object sender, EventArgs e)
