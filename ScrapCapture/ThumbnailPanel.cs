@@ -3,6 +3,8 @@ using System.Linq;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
+using System.Drawing.Drawing2D;
 
 namespace RecycleBin.ScrapCapture
 {
@@ -148,39 +150,68 @@ namespace RecycleBin.ScrapCapture
 
 		public Image CaptureCurrentImage()
 		{
-			Rectangle bounds = GetVisibleBounds(ClientRectangle);
-			Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height);
+			RECT rect;
+			GetWindowRect(windowHandle, out rect);
+			Size size = rect.Size;
+
+			if (size.IsEmpty)
+			{
+				throw new ApplicationException("ウィンドウサイズが取得できませんでした。");
+			}
+
+			// ウィンドウ枠も含めてウィンドウ全体をビットマップに描画する。
+			IntPtr deviceContext = GetWindowDC(windowHandle);
+			Bitmap bitmap = new Bitmap(size.Width, size.Height);
 			using (Graphics g = Graphics.FromImage(bitmap))
 			{
-				BringToFront();
-				g.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bitmap.Size);
+				IntPtr hDC = g.GetHdc();
+				BitBlt(hDC, 0, 0, bitmap.Width, bitmap.Height, deviceContext, 0, 0, SRCCOPY);
+				g.ReleaseHdc(hDC);
 			}
-			return bitmap;
-		}
+			ReleaseDC(windowHandle, deviceContext);
 
-		private Rectangle GetVisibleBounds(Rectangle rectangle)
-		{
-			using (Graphics g = CreateGraphics())
+			Padding borderMargin = new Padding();
+			if (ClientAreaOnly)
 			{
-				Region visibleRegion = new Region();
-				visibleRegion.MakeEmpty();
-				foreach (Screen screen in Screen.AllScreens)
-				{
-					visibleRegion.Union(screen.Bounds);
-				}
-				Form parentForm = FindForm();
-				visibleRegion.Intersect(parentForm.RectangleToScreen(parentForm.ClientRectangle));
-				visibleRegion.Intersect(RectangleToScreen(rectangle));
-
-				RectangleF savedRegion = visibleRegion.GetBounds(g);
-				return new Rectangle(
-					(int)savedRegion.X,
-					(int)savedRegion.Y,
-					(int)Math.Ceiling(savedRegion.Width),
-					(int)Math.Ceiling(savedRegion.Height)
-				);
+				RECT clientRect;
+				GetClientRect(windowHandle, out clientRect);
+				Size clientSize = clientRect.Size;
+				int borderWidth = (size.Width - clientSize.Width) / 2;
+				borderMargin.Left = borderWidth;
+				borderMargin.Right = borderWidth;
+				borderMargin.Bottom = borderWidth;
+				borderMargin.Top = size.Height - clientSize.Height - borderWidth;
 			}
+
+			Bitmap clippedBitmap = new Bitmap(DrawnSize.Width, DrawnSize.Height);
+			using (Graphics g = Graphics.FromImage(clippedBitmap))
+			{
+				Rectangle clippedRegion = new Rectangle(
+					drawnRegion.Left + borderMargin.Left,
+					drawnRegion.Top + borderMargin.Top,
+					drawnRegion.Width,
+					drawnRegion.Height
+				);
+				g.InterpolationMode = InterpolationMode.Bicubic;
+				g.DrawImage(bitmap, new Rectangle(Point.Empty, clippedBitmap.Size), clippedRegion, GraphicsUnit.Pixel);
+			}
+
+			bitmap.Dispose();
+			return clippedBitmap;
 		}
+
+		private const int SRCCOPY = 0x00CC0020;
+
+		[DllImport("user32.dll")]
+		private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+		[DllImport("user32.dll")]
+		private static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+		[DllImport("user32.dll")]
+		private static extern IntPtr GetWindowDC(IntPtr hWnd);
+		[DllImport("user32.dll")]
+		private static extern bool ReleaseDC(IntPtr hWnd, IntPtr hDC);
+		[DllImport("gdi32.dll")]
+		private static extern bool BitBlt(IntPtr hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, int dwRop);
 
 		public new void BringToFront()
 		{
