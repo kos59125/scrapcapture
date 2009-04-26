@@ -128,7 +128,7 @@
             this.toolStripSeparator3,
             this.removeToolStripMenuItem});
 			this.panelContextMenuStrip.Name = "contextMenuStrip";
-			this.panelContextMenuStrip.Size = new System.Drawing.Size(255, 142);
+			this.panelContextMenuStrip.Size = new System.Drawing.Size(255, 120);
 			this.panelContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.panelContextMenuStrip_Opening);
 			// 
 			// hideWindowBorderToolStripMenuItem
@@ -187,7 +187,7 @@
 			this.ContextMenuStrip = this.contextMenuStrip;
 			this.Cursor = System.Windows.Forms.Cursors.Default;
 			this.Name = "WindowCaptureForm";
-			this.Text = "Window Capture";
+			this.Text = "Scrap Capture";
 			this.contextMenuStrip.ResumeLayout(false);
 			this.panelContextMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
