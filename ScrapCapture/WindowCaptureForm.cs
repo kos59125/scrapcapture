@@ -276,7 +276,7 @@ namespace RecycleBin.ScrapCapture
 			RegionSelector selector = new RegionSelector();
 			selector.Load += (eventSender, eventArgs) =>
 			{
-				selector.SetWindow(panel.GetWindow());
+				selector.SetWindow(panel.GetWindow(), panel.ClientAreaOnly);
 				selector.DrawnRegion = panel.DrawnRegion;
 			};
 			if (selector.ShowDialog(this) == DialogResult.OK)

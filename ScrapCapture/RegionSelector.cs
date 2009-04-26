@@ -21,9 +21,10 @@ namespace RecycleBin.ScrapCapture
 			mouseLocation = null;
 		}
 
-		public void SetWindow(IntPtr thumbnail)
+		public void SetWindow(IntPtr thumbnail, bool clientAreaOnly)
 		{
 			thumbnailPanel.SetWindow(thumbnail);
+			thumbnailPanel.ClientAreaOnly = clientAreaOnly;
 		}
 
 		public Rectangle DrawnRegion
