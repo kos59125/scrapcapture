@@ -42,6 +42,7 @@ namespace RecycleBin.ScrapCapture
 				coveredControl = value;
 				if (coveredControl != null)
 				{
+					ResetCover();
 					this.ContextMenuStrip = coveredControl.ContextMenuStrip;
 				}
 			}
@@ -51,6 +52,15 @@ namespace RecycleBin.ScrapCapture
 		{
 			get;
 			set;
+		}
+
+		public void ResetCover()
+		{
+			if (CoveredControl != null)
+			{
+				this.Bounds = CoveredControl.RectangleToScreen(CoveredControl.Bounds);
+			}
+			Invalidate();
 		}
 
 		private void DrawFrame()
@@ -105,6 +115,19 @@ namespace RecycleBin.ScrapCapture
 			{
 				Location = new Point(this.Location.X + e.X - mouseLocation.X, this.Location.Y + e.Y - mouseLocation.Y);
 				AdjustBounds();
+			}
+		}
+
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			base.OnMouseUp(e);
+
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				if (Bounds.IsEmpty || (CoveredControl != null && !CoveredControl.RectangleToScreen(CoveredControl.Bounds).Contains(this.Bounds)))
+				{
+					ResetCover();
+				}
 			}
 		}
 
