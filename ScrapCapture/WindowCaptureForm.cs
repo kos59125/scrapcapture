@@ -176,30 +176,16 @@ namespace RecycleBin.ScrapCapture
 		private void clipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
-			try
+			using (Image image = panel.CaptureCurrentImage())
 			{
-				using (Image image = panel.CaptureCurrentImage())
-				{
-					Clipboard.SetImage(image);
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Clipboard.SetImage(image);
 			}
 		}
 
 		private void fixToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
 		{
 			ThumbnailPanel panel = (ThumbnailPanel)panelContextMenuStrip.SourceControl;
-			try
-			{
-				panel.IsFixed = fixToolStripMenuItem.Checked;
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
+			panel.IsFixed = fixToolStripMenuItem.Checked;
 		}
 
 		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
