@@ -114,9 +114,12 @@ namespace RecycleBin.ScrapCapture
 					{
 						g.DrawImageUnscaled(capture, RectangleToClient(GetVisibleBounds(ClientRectangle)));
 					}
-					foreach (ThumbnailPanel panel in dictionary.Keys)
+					if (dictionary != null)
 					{
-						panel.Visible = dictionary[panel];
+						foreach (ThumbnailPanel panel in dictionary.Keys)
+						{
+							panel.Visible = dictionary[panel];
+						}
 					}
 				}
 				UpdateThubmnail();
