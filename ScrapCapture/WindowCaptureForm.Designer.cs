@@ -42,10 +42,10 @@
 			this.hideWindowBorderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.panelRegionSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.fixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveImageFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.fixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.contextMenuStrip.SuspendLayout();
 			this.panelContextMenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -128,7 +128,7 @@
             this.toolStripSeparator3,
             this.removeToolStripMenuItem});
 			this.panelContextMenuStrip.Name = "contextMenuStrip";
-			this.panelContextMenuStrip.Size = new System.Drawing.Size(255, 120);
+			this.panelContextMenuStrip.Size = new System.Drawing.Size(255, 142);
 			this.panelContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.panelContextMenuStrip_Opening);
 			// 
 			// hideWindowBorderToolStripMenuItem
@@ -153,6 +153,14 @@
 			this.clipboardToolStripMenuItem.Text = "クリップボードにコピーする (&C)";
 			this.clipboardToolStripMenuItem.Click += new System.EventHandler(this.clipboardToolStripMenuItem_Click);
 			// 
+			// fixToolStripMenuItem
+			// 
+			this.fixToolStripMenuItem.CheckOnClick = true;
+			this.fixToolStripMenuItem.Name = "fixToolStripMenuItem";
+			this.fixToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+			this.fixToolStripMenuItem.Text = "画像を固定する (&F)";
+			this.fixToolStripMenuItem.CheckedChanged += new System.EventHandler(this.fixToolStripMenuItem_CheckedChanged);
+			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -169,14 +177,6 @@
 			// 
 			this.saveImageFileDialog.DefaultExt = "png";
 			this.saveImageFileDialog.Filter = "PNG ファイル (*.png)|*.png|JPEG ファイル (*.jpg)|*.jpg|Bitmap ファイル (*.bmp)|*.bmp";
-			// 
-			// fixToolStripMenuItem
-			// 
-			this.fixToolStripMenuItem.CheckOnClick = true;
-			this.fixToolStripMenuItem.Name = "fixToolStripMenuItem";
-			this.fixToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
-			this.fixToolStripMenuItem.Text = "toolStripMenuItem1";
-			this.fixToolStripMenuItem.CheckedChanged += new System.EventHandler(this.fixToolStripMenuItem_CheckedChanged);
 			// 
 			// WindowCaptureForm
 			// 
