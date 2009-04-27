@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace RecycleBin.ScrapCapture
 {
-	public class ThumbnailPanel : Control
+	public class ThumbnailPanel : PictureBox
 	{
 		public event EventHandler SourceSizeChanged;
 		public event EventHandler SourceWindowChanged;
@@ -24,9 +24,6 @@ namespace RecycleBin.ScrapCapture
 		{
 			InitializeComponent();
 			scale = 1;
-#if DEBUG
-			BackColor = Color.Black;
-#endif
 		}
 
 		public Size SourceSize
@@ -109,9 +106,14 @@ namespace RecycleBin.ScrapCapture
 					{
 						panel.Visible = false;
 					}
-					using (Image capture = CaptureCurrentImage())
-					using (Graphics g = CreateGraphics())
+					if (Image == null)
 					{
+						Image = new Bitmap(Width, Height);
+					}
+					using (Image capture = CaptureCurrentImage())
+					using (Graphics g = Graphics.FromImage(Image))
+					{
+						g.Clear(Color.Black);
 						g.DrawImageUnscaled(capture, RectangleToClient(GetVisibleBounds(ClientRectangle)));
 					}
 					if (dictionary != null)
@@ -121,6 +123,10 @@ namespace RecycleBin.ScrapCapture
 							panel.Visible = dictionary[panel];
 						}
 					}
+				}
+				else
+				{
+					Image = null;
 				}
 				UpdateThubmnail();
 			}
