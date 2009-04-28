@@ -11,6 +11,7 @@ namespace RecycleBin.ScrapCapture
 	{
 		public event EventHandler SourceSizeChanged;
 		public event EventHandler SourceWindowChanged;
+		public event EventHandler FixedChanged;
 
 		private IntPtr thumbnail;
 		private IntPtr windowHandle;
@@ -93,42 +94,11 @@ namespace RecycleBin.ScrapCapture
 			}
 			set
 			{
-				isFixed = value;
-				Refresh();
-				if (isFixed)
+				if (isFixed != value)
 				{
-					Dictionary<ThumbnailPanel, bool> dictionary = null;
-					if (Parent != null)
-					{
-						dictionary = Parent.Controls.OfType<ThumbnailPanel>().Where(panel => !object.ReferenceEquals(panel, this)).ToDictionary(panel => panel, panel => panel.Visible);
-					}
-					foreach (ThumbnailPanel panel in dictionary.Keys)
-					{
-						panel.Visible = false;
-					}
-					if (Image == null)
-					{
-						Image = new Bitmap(Width, Height);
-					}
-					using (Image capture = CaptureCurrentImage())
-					using (Graphics g = Graphics.FromImage(Image))
-					{
-						g.Clear(Color.Black);
-						g.DrawImageUnscaled(capture, RectangleToClient(GetVisibleBounds(ClientRectangle)));
-					}
-					if (dictionary != null)
-					{
-						foreach (ThumbnailPanel panel in dictionary.Keys)
-						{
-							panel.Visible = dictionary[panel];
-						}
-					}
+					isFixed = value;
+					OnFixedChanged(EventArgs.Empty);
 				}
-				else
-				{
-					Image = null;
-				}
-				UpdateThubmnail();
 			}
 		}
 
@@ -355,6 +325,51 @@ namespace RecycleBin.ScrapCapture
 			if (SourceWindowChanged != null)
 			{
 				SourceWindowChanged(this, e);
+			}
+		}
+
+		protected virtual void OnFixedChanged(EventArgs e)
+		{
+			if (isFixed)
+			{
+				Dictionary<ThumbnailPanel, bool> dictionary = null;
+				if (Parent != null)
+				{
+					dictionary = Parent.Controls.OfType<ThumbnailPanel>().Where(panel => !object.ReferenceEquals(panel, this)).ToDictionary(panel => panel, panel => panel.Visible);
+				}
+				foreach (ThumbnailPanel panel in dictionary.Keys)
+				{
+					panel.Visible = false;
+				}
+				if (Image == null)
+				{
+					Image = new Bitmap(Width, Height);
+				}
+				using (Image capture = CaptureCurrentImage())
+				using (Graphics g = Graphics.FromImage(Image))
+				{
+					g.Clear(Color.Black);
+					g.DrawImageUnscaled(capture, RectangleToClient(GetVisibleBounds(ClientRectangle)));
+				}
+				if (dictionary != null)
+				{
+					foreach (ThumbnailPanel panel in dictionary.Keys)
+					{
+						panel.Visible = dictionary[panel];
+					}
+				}
+				BackColor = Color.Black;
+			}
+			else
+			{
+				Image = null;
+				BackColor = Color.White;
+			}
+			UpdateThubmnail();
+
+			if (FixedChanged != null)
+			{
+				FixedChanged(this, e);
 			}
 		}
 
