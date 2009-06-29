@@ -307,7 +307,7 @@ namespace RecycleBin.ScrapCapture
 			else
 			{
 				Size = SourceSize;
-				ResetDrawnRegion();
+				//ResetDrawnRegion();
 				UpdateThubmnail();
 
 				if (SourceSizeChanged != null)
