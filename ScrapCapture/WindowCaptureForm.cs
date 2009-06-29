@@ -33,6 +33,13 @@ namespace RecycleBin.ScrapCapture
 #endif
 		}
 
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+
+			ClientSize = new Size(800, 600);
+		}
+
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			base.OnFormClosing(e);
