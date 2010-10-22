@@ -175,7 +175,7 @@ namespace RecycleBin.ScrapCapture
 					dwFlags = DWM_TNP.DWM_TNP_OPACITY | DWM_TNP.DWM_TNP_RECTDESTINATION | DWM_TNP.DWM_TNP_RECTSOURCE | DWM_TNP.DWM_TNP_SOURCECLIENTAREAONLY | DWM_TNP.DWM_TNP_VISIBLE,
 					fSourceClientAreaOnly = ClientAreaOnly,
 					fVisible = true,
-					opacity = Byte.MaxValue,
+					opacity = (byte)(Byte.MaxValue * Opacity),
 					rcDestination = new RECT(Left, Top, size.Width, size.Height),
 					rcSource = new RECT(DrawnRegion),
 				};
@@ -239,6 +239,16 @@ namespace RecycleBin.ScrapCapture
 		protected virtual void OnThumbnailUpdateFailed(object sender, EventArgs args)
 		{
 			RaiseEvent(new RoutedEventArgs(ThumbnailUpdateFailedEvent, sender));
+		}
+
+		protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+		{
+			base.OnPropertyChanged(e);
+
+			if (e.Property == UIElement.OpacityProperty)
+			{
+				UpdateThubmnail();
+			}
 		}
 
 		private static void DrawnRegionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
