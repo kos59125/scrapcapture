@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RecycleBin.ScrapCapture
 {
@@ -198,12 +198,11 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		protected override void OnRender(System.Windows.Media.DrawingContext drawingContext)
+		protected override void OnRender(DrawingContext drawingContext)
 		{
 			base.OnRender(drawingContext);
-#if DEBUG
-			drawingContext.DrawRectangle(System.Windows.Media.Brushes.Black, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
-#endif
+
+			drawingContext.DrawRectangle(Owner.Background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
 		}
 
 		protected override Size ArrangeOverride(Size finalSize)

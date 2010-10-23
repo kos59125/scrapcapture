@@ -54,8 +54,6 @@ namespace RecycleBin.ScrapCapture
 			{
 				Owner = this,
 				Target = window,
-				Top = 0.0,
-				Left = 0.0,
 			};
 			thumbnail.MouseWheel += Thumbnail_MouseWheel;
 			thumbnail.MouseDown += Thumbnail_MouseDown;
@@ -96,16 +94,13 @@ namespace RecycleBin.ScrapCapture
 
 		private void Thumbnail_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			if (e.LeftButton == MouseButtonState.Pressed)
+			Thumbnail thumbnail = sender as Thumbnail;
+			if (thumbnail != null && e.LeftButton == MouseButtonState.Pressed)
 			{
-				Thumbnail thumbnail = sender as Thumbnail;
 				mouseLocation = e.GetPosition(this);
-				if (thumbnail != null)
-				{
-					BringToFront(thumbnail);
-					thumbnail.CaptureMouse();
-					e.Handled = true;
-				}
+				BringToFront(thumbnail);
+				thumbnail.CaptureMouse();
+				e.Handled = true;
 			}
 		}
 
