@@ -317,8 +317,6 @@ namespace RecycleBin.ScrapCapture
 			{
 				thumbnail.RenderSize = thumbnail.ComputeThumbnailSize();
 				Size newSize = thumbnail.RenderSize;
-				thumbnail.Left = thumbnail.Left + (thumbnail.Width - newSize.Width) / 2;
-				thumbnail.Top = thumbnail.Top + (thumbnail.Height - newSize.Height) / 2;
 				thumbnail.Width = newSize.Width;
 				thumbnail.Height = newSize.Height;
 				Point location = new Point(thumbnail.Left, thumbnail.Top);
