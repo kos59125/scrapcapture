@@ -69,7 +69,7 @@ namespace RecycleBin.ScrapCapture
 					target = value;
 					thumbnail = DesktopWindowManager.Register(Owner, target);
 					ResetDrawnRegion();
-					UpdateThubmnail();
+					UpdateThumbnail();
 				}
 			}
 		}
@@ -165,7 +165,7 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		public void UpdateThubmnail()
+		public void UpdateThumbnail()
 		{
 			if (thumbnail != IntPtr.Zero)
 			{
@@ -196,7 +196,7 @@ namespace RecycleBin.ScrapCapture
 			{
 				DesktopWindowManager.Unregister(thumbnail);
 				thumbnail = DesktopWindowManager.Register(Owner, target);
-				UpdateThubmnail();
+				UpdateThumbnail();
 			}
 		}
 
@@ -247,7 +247,7 @@ namespace RecycleBin.ScrapCapture
 
 			if (e.Property == UIElement.OpacityProperty)
 			{
-				UpdateThubmnail();
+				UpdateThumbnail();
 			}
 		}
 
@@ -256,7 +256,7 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.UpdateThubmnail();
+				thumbnail.UpdateThumbnail();
 			}
 		}
 
@@ -265,7 +265,7 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.UpdateThubmnail();
+				thumbnail.UpdateThumbnail();
 			}
 		}
 
@@ -275,7 +275,7 @@ namespace RecycleBin.ScrapCapture
 			if (thumbnail != null)
 			{
 				Canvas.SetTop(thumbnail, (double)e.NewValue);
-				thumbnail.UpdateThubmnail();
+				thumbnail.UpdateThumbnail();
 			}
 		}
 
@@ -285,7 +285,7 @@ namespace RecycleBin.ScrapCapture
 			if (thumbnail != null)
 			{
 				Canvas.SetLeft(thumbnail, (double)e.NewValue);
-				thumbnail.UpdateThubmnail();
+				thumbnail.UpdateThumbnail();
 			}
 		}
 
@@ -294,7 +294,7 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.UpdateThubmnail();
+				thumbnail.UpdateThumbnail();
 				thumbnail.RenderSize = thumbnail.ComputeThumbnailSize();
 			}
 		}
