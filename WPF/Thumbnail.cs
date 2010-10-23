@@ -148,14 +148,6 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		public Size Size
-		{
-			get
-			{
-				return ComputeThumbnailSize();
-			}
-		}
-
 		public void ResetDrawnRegion()
 		{
 			if (thumbnail != IntPtr.Zero)
@@ -169,24 +161,30 @@ namespace RecycleBin.ScrapCapture
 		{
 			if (thumbnail != IntPtr.Zero)
 			{
+				Point location = new Point(Left, Top);
 				Size size = ComputeThumbnailSize();
-				DWM_THUMBNAIL_PROPERTIES properties = new DWM_THUMBNAIL_PROPERTIES()
-				{
-					dwFlags = DWM_TNP.DWM_TNP_OPACITY | DWM_TNP.DWM_TNP_RECTDESTINATION | DWM_TNP.DWM_TNP_RECTSOURCE | DWM_TNP.DWM_TNP_SOURCECLIENTAREAONLY | DWM_TNP.DWM_TNP_VISIBLE,
-					fSourceClientAreaOnly = ClientAreaOnly,
-					fVisible = true,
-					opacity = (byte)(Byte.MaxValue * Opacity),
-					rcDestination = new RECT(Left, Top, size.Width, size.Height),
-					rcSource = new RECT(DrawnRegion),
-				};
-				if (DesktopWindowManager.Update(thumbnail, ref properties))
-				{
-					OnThumbnailUpdated(this, EventArgs.Empty);
-				}
-				else
-				{
-					OnThumbnailUpdateFailed(this, EventArgs.Empty);
-				}
+				UpdateThumbnail(location, size);
+			}
+		}
+
+		private void UpdateThumbnail(Point location, Size size)
+		{
+			DWM_THUMBNAIL_PROPERTIES properties = new DWM_THUMBNAIL_PROPERTIES()
+			{
+				dwFlags = DWM_TNP.DWM_TNP_OPACITY | DWM_TNP.DWM_TNP_RECTDESTINATION | DWM_TNP.DWM_TNP_RECTSOURCE | DWM_TNP.DWM_TNP_SOURCECLIENTAREAONLY | DWM_TNP.DWM_TNP_VISIBLE,
+				fSourceClientAreaOnly = ClientAreaOnly,
+				fVisible = true,
+				opacity = (byte)(Byte.MaxValue * Opacity),
+				rcDestination = new RECT(location.X, location.Y, size.Width, size.Height),
+				rcSource = new RECT(DrawnRegion),
+			};
+			if (DesktopWindowManager.Update(thumbnail, ref properties))
+			{
+				OnThumbnailUpdated(this, EventArgs.Empty);
+			}
+			else
+			{
+				OnThumbnailUpdateFailed(this, EventArgs.Empty);
 			}
 		}
 
@@ -200,19 +198,28 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		protected override void OnMouseDown(MouseButtonEventArgs e)
+		protected override void OnRender(System.Windows.Media.DrawingContext drawingContext)
 		{
-			base.OnMouseDown(e);
+			base.OnRender(drawingContext);
+#if DEBUG
+			drawingContext.DrawRectangle(System.Windows.Media.Brushes.Black, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+#endif
 		}
 
 		protected override Size ArrangeOverride(Size finalSize)
 		{
-			return ComputeThumbnailSize();
+			Size newSize = ComputeThumbnailSize();
+			Point location = new Point(Left + (finalSize.Width - newSize.Width) / 2, Top + (finalSize.Height - newSize.Height) / 2);
+			UpdateThumbnail(location, newSize);
+			return newSize;
 		}
 
 		protected override Size MeasureOverride(Size availableSize)
 		{
-			return ComputeThumbnailSize();
+			Size size = ComputeThumbnailSize();
+			Width = size.Width;
+			Height = size.Height;
+			return size;
 		}
 
 		private Size ComputeThumbnailSize()
@@ -294,8 +301,15 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.UpdateThumbnail();
 				thumbnail.RenderSize = thumbnail.ComputeThumbnailSize();
+				Size newSize = thumbnail.RenderSize;
+				thumbnail.Left = thumbnail.Left + (thumbnail.Width - newSize.Width) / 2;
+				thumbnail.Top = thumbnail.Top + (thumbnail.Height - newSize.Height) / 2;
+				thumbnail.Width = newSize.Width;
+				thumbnail.Height = newSize.Height;
+				Point location = new Point(thumbnail.Left, thumbnail.Top);
+				thumbnail.UpdateThumbnail(location, newSize);
+				thumbnail.InvalidateVisual();
 			}
 		}
 	}

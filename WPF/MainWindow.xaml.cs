@@ -12,7 +12,6 @@ namespace RecycleBin.ScrapCapture
 		private static readonly double ScaleDelta = 0.1;
 
 		private Point mouseLocation;
-		private Thumbnail thumbnail;
 
 		public MainWindow()
 		{
@@ -58,21 +57,11 @@ namespace RecycleBin.ScrapCapture
 				Top = 0.0,
 				Left = 0.0,
 			};
+			thumbnail.MouseWheel += Thumbnail_MouseWheel;
+			thumbnail.MouseDown += Thumbnail_MouseDown;
+			thumbnail.MouseUp += Thumbnail_MouseUp;
+			thumbnail.MouseMove += Thumbnail_MouseMove;
 			canvas.Children.Add(thumbnail);
-		}
-
-		private Thumbnail FindThumbnail(Point position)
-		{
-			var thumbnails = canvas.Children.OfType<Thumbnail>().Reverse();
-			foreach (Thumbnail thumbnail in thumbnails)
-			{
-				if (thumbnail.Left <= position.X && position.X <= thumbnail.Left + thumbnail.RenderSize.Width &&
-					thumbnail.Top <= position.Y && position.Y <= thumbnail.Top + thumbnail.RenderSize.Height)
-				{
-					return thumbnail;
-				}
-			}
-			return null;
 		}
 
 		private void BringToFront(Thumbnail thumbnail)
@@ -82,16 +71,14 @@ namespace RecycleBin.ScrapCapture
 			canvas.Children.Add(thumbnail);
 		}
 
-		protected override void OnMouseWheel(MouseWheelEventArgs e)
+		private void Thumbnail_MouseWheel(object sender, MouseWheelEventArgs e)
 		{
-			base.OnMouseWheel(e);
-
 			if (e.Delta == 0)
 			{
 				return;
 			}
 
-			Thumbnail thumbnail = FindThumbnail(e.GetPosition(this));
+			Thumbnail thumbnail = sender as Thumbnail;
 			if (thumbnail == null)
 			{
 				return;
@@ -107,28 +94,25 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		protected override void OnMouseDown(MouseButtonEventArgs e)
+		private void Thumbnail_MouseDown(object sender, MouseButtonEventArgs e)
 		{
-			base.OnMouseDown(e);
-
 			if (e.LeftButton == MouseButtonState.Pressed)
 			{
+				Thumbnail thumbnail = sender as Thumbnail;
 				mouseLocation = e.GetPosition(this);
-				thumbnail = FindThumbnail(mouseLocation);
 				if (thumbnail != null)
 				{
 					BringToFront(thumbnail);
-					CaptureMouse();
+					thumbnail.CaptureMouse();
 					e.Handled = true;
 				}
 			}
 		}
 
-		protected override void OnMouseMove(MouseEventArgs e)
+		private void Thumbnail_MouseMove(object sender, MouseEventArgs e)
 		{
-			base.OnMouseMove(e);
-
-			if (IsMouseCaptured)
+			Thumbnail thumbnail = sender as Thumbnail;
+			if (thumbnail != null && thumbnail.IsMouseCaptured)
 			{
 				Point position = e.GetPosition(this);
 				thumbnail.Left += position.X - mouseLocation.X;
@@ -137,14 +121,12 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		protected override void OnMouseUp(MouseButtonEventArgs e)
+		private void Thumbnail_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			base.OnMouseUp(e);
-
-			if (IsMouseCaptured && e.LeftButton == MouseButtonState.Released)
+			Thumbnail thumbnail = sender as Thumbnail;
+			if (thumbnail != null)
 			{
-				thumbnail = null;
-				ReleaseMouseCapture();
+				thumbnail.ReleaseMouseCapture();
 				e.Handled = true;
 			}
 		}
