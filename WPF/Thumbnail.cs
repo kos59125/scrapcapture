@@ -57,27 +57,12 @@ namespace RecycleBin.ScrapCapture
 			}
 			set
 			{
-				if (IsRegistered)
+				UnsetWindow();
+				if (value != null)
 				{
-					DesktopWindowManager.Unregister(thumbnail);
-					thumbnail = IntPtr.Zero;
-				}
-				target = null;
-
-				if (value != null && DesktopWindowManager.IsCompositionEnabled)
-				{
-					target = value;
-					thumbnail = DesktopWindowManager.Register(Owner, target);
-					ResetDrawnRegion();
-					UpdateThumbnail();
+					SetWindow(value);
 				}
 			}
-		}
-
-		public Window Owner
-		{
-			get;
-			set;
 		}
 
 		public double Top
@@ -188,12 +173,38 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		public void BringToFront()
+		public void SetWindow(ApplicationWindow window)
+		{
+			if (window != null && DesktopWindowManager.IsCompositionEnabled)
+			{
+				target = window;
+				Window owner = Window.GetWindow(this);
+				if (owner != null)
+				{
+					thumbnail = DesktopWindowManager.Register(owner, target);
+					ResetDrawnRegion();
+					UpdateThumbnail();
+				}
+			}
+		}
+
+		public void UnsetWindow()
 		{
 			if (IsRegistered)
 			{
 				DesktopWindowManager.Unregister(thumbnail);
-				thumbnail = DesktopWindowManager.Register(Owner, target);
+				thumbnail = IntPtr.Zero;
+			}
+			target = null;
+		}
+
+		public void BringToFront()
+		{
+			Window owner = Window.GetWindow(this);
+			if (IsRegistered && owner != null)
+			{
+				DesktopWindowManager.Unregister(thumbnail);
+				thumbnail = DesktopWindowManager.Register(owner, target);
 				UpdateThumbnail();
 			}
 		}
@@ -202,7 +213,11 @@ namespace RecycleBin.ScrapCapture
 		{
 			base.OnRender(drawingContext);
 
-			drawingContext.DrawRectangle(Owner.Background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+			Window owner = Window.GetWindow(this);
+			if (owner != null)
+			{
+				drawingContext.DrawRectangle(owner.Background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+			}
 		}
 
 		protected override Size ArrangeOverride(Size finalSize)

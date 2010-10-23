@@ -50,16 +50,13 @@ namespace RecycleBin.ScrapCapture
 
 		public void CaptureWindow(ApplicationWindow window)
 		{
-			Thumbnail thumbnail = new Thumbnail()
-			{
-				Owner = this,
-				Target = window,
-			};
+			Thumbnail thumbnail = new Thumbnail();
 			thumbnail.MouseWheel += Thumbnail_MouseWheel;
 			thumbnail.MouseDown += Thumbnail_MouseDown;
 			thumbnail.MouseUp += Thumbnail_MouseUp;
 			thumbnail.MouseMove += Thumbnail_MouseMove;
 			canvas.Children.Add(thumbnail);
+			thumbnail.SetWindow(window);
 		}
 
 		private void BringToFront(Thumbnail thumbnail)
