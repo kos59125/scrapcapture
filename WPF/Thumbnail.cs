@@ -221,7 +221,11 @@ namespace RecycleBin.ScrapCapture
 			Window owner = Window.GetWindow(this);
 			if (owner != null)
 			{
+#if DEBUG
+				drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+#else
 				drawingContext.DrawRectangle(owner.Background, null, new Rect(0, 0, RenderSize.Width, RenderSize.Height));
+#endif
 			}
 		}
 
@@ -292,6 +296,11 @@ namespace RecycleBin.ScrapCapture
 			if (thumbnail != null)
 			{
 				thumbnail.UpdateThumbnail();
+				thumbnail.ResetDrawnRegion();
+				Point location = new Point(thumbnail.Left, thumbnail.Top);
+				Size newSize = thumbnail.ComputeThumbnailSize();
+				thumbnail.Measure(newSize);
+				thumbnail.Arrange(new Rect(location, newSize));
 				thumbnail.InvalidateVisual();
 			}
 		}
@@ -321,11 +330,10 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.RenderSize = thumbnail.ComputeThumbnailSize();
-				Size newSize = thumbnail.RenderSize;
-				thumbnail.Width = newSize.Width;
-				thumbnail.Height = newSize.Height;
 				Point location = new Point(thumbnail.Left, thumbnail.Top);
+				Size newSize = thumbnail.ComputeThumbnailSize();
+				thumbnail.Measure(newSize);
+				thumbnail.Arrange(new Rect(location, newSize));
 				thumbnail.UpdateThumbnail(location, newSize);
 				thumbnail.InvalidateVisual();
 			}
