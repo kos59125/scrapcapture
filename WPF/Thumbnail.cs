@@ -175,6 +175,11 @@ namespace RecycleBin.ScrapCapture
 
 		public void SetWindow(ApplicationWindow window)
 		{
+			if (Window.GetWindow(this) == null)
+			{
+				throw new InvalidOperationException();
+			}
+
 			if (window != null && DesktopWindowManager.IsCompositionEnabled)
 			{
 				target = window;
