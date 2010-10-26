@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace RecycleBin.ScrapCapture
@@ -51,12 +52,37 @@ namespace RecycleBin.ScrapCapture
 		public void CaptureWindow(ApplicationWindow window)
 		{
 			Thumbnail thumbnail = new Thumbnail();
-			thumbnail.MouseWheel += Thumbnail_MouseWheel;
-			thumbnail.MouseDown += Thumbnail_MouseDown;
-			thumbnail.MouseUp += Thumbnail_MouseUp;
-			thumbnail.MouseMove += Thumbnail_MouseMove;
+			SetContextMenu(thumbnail);
+			RegisterMouseEvent(thumbnail);
 			canvas.Children.Add(thumbnail);
 			thumbnail.SetWindow(window);
+		}
+
+		private void SetContextMenu(Thumbnail thumbnail)
+		{
+			ContextMenu contextMenu = new ContextMenu();
+
+			MenuItem toggleItem = new MenuItem()
+			{
+				Header = "クライアント領域のみを表示",
+				IsCheckable = true,
+			};
+			Binding checkedBinding = new Binding("IsChecked")
+			{
+				Source = toggleItem,
+			};
+			thumbnail.SetBinding(Thumbnail.ClientAreaOnlyProperty, checkedBinding);
+			contextMenu.Items.Add(toggleItem);
+
+			thumbnail.ContextMenu = contextMenu;
+		}
+
+		private void RegisterMouseEvent(Thumbnail thumbnail)
+		{
+			thumbnail.MouseWheel += Thumbnail_MouseWheel;
+			thumbnail.MouseLeftButtonDown += Thumbnail_MouseLeftButtonDown;
+			thumbnail.MouseLeftButtonUp += Thumbnail_MouseLeftButtonUp;
+			thumbnail.MouseMove += Thumbnail_MouseMove;
 		}
 
 		private void BringToFront(Thumbnail thumbnail)
@@ -89,7 +115,7 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		private void Thumbnail_MouseDown(object sender, MouseButtonEventArgs e)
+		private void Thumbnail_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			Thumbnail thumbnail = sender as Thumbnail;
 			if (thumbnail != null && e.LeftButton == MouseButtonState.Pressed)
@@ -113,7 +139,7 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		private void Thumbnail_MouseUp(object sender, MouseButtonEventArgs e)
+		private void Thumbnail_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			Thumbnail thumbnail = sender as Thumbnail;
 			if (thumbnail != null)
