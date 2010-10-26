@@ -224,7 +224,7 @@ namespace RecycleBin.ScrapCapture
 		{
 			Size newSize = ComputeThumbnailSize();
 			Point location = new Point(Left + (finalSize.Width - newSize.Width) / 2, Top + (finalSize.Height - newSize.Height) / 2);
-			UpdateThumbnail(location, newSize);
+			UpdateThumbnail(location, finalSize);
 			return newSize;
 		}
 
@@ -287,6 +287,7 @@ namespace RecycleBin.ScrapCapture
 			if (thumbnail != null)
 			{
 				thumbnail.UpdateThumbnail();
+				thumbnail.InvalidateVisual();
 			}
 		}
 
