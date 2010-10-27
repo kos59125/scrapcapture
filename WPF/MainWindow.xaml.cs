@@ -74,6 +74,19 @@ namespace RecycleBin.ScrapCapture
 			thumbnail.SetBinding(Thumbnail.ClientAreaOnlyProperty, checkedBinding);
 			contextMenu.Items.Add(toggleItem);
 
+			contextMenu.Items.Add(new Separator());
+
+			MenuItem removeItem = new MenuItem()
+			{
+				Header = "削除",
+			};
+			removeItem.Click += (sender, e) =>
+			{
+				thumbnail.UnsetWindow();
+				canvas.Children.Remove(thumbnail);
+			};
+			contextMenu.Items.Add(removeItem);
+
 			thumbnail.ContextMenu = contextMenu;
 		}
 
