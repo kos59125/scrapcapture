@@ -27,19 +27,6 @@ namespace RecycleBin.ScrapCapture
 			}
 		}
 
-		public ImageSource Icon
-		{
-			get
-			{
-				IntPtr iconHandle = GetIconHandle(base.handle);
-				if (iconHandle == IntPtr.Zero)
-				{
-					return null;
-				}
-				return Imaging.CreateBitmapSourceFromHIcon(iconHandle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-			}
-		}
-
 		public bool Visible
 		{
 			get
@@ -66,6 +53,16 @@ namespace RecycleBin.ScrapCapture
 		protected override bool ReleaseHandle()
 		{
 			return true;
+		}
+
+		public ImageSource GetIcon(IconSize size)
+		{
+			IntPtr iconHandle = GetClassLongPtr(base.handle, (int)size);
+			if (iconHandle == IntPtr.Zero)
+			{
+				return null;
+			}
+			return Imaging.CreateBitmapSourceFromHIcon(iconHandle, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 		}
 
 		public bool IsIdentical(Window window)
@@ -122,15 +119,9 @@ namespace RecycleBin.ScrapCapture
 			return String.Empty;
 		}
 
-		private static IntPtr GetIconHandle(IntPtr windowHandle)
-		{
-			return GetClassLongPtr(windowHandle, GCL_HICONSM);
-		}
-
 		private const uint GW_OWNER = 4;
 		private const uint WS_EX_TOOLWINDOW = 0x80;
 		private const int GWL_EXSTYLE = -20;
-		private const int GCL_HICONSM = -34;
 		private delegate bool EnumWindowsCallback(IntPtr hWnd, IntPtr lParam);
 
 		[DllImport("user32.dll")]

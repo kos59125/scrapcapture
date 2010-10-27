@@ -33,7 +33,7 @@ namespace RecycleBin.ScrapCapture
 					Header = window.Text,
 					Icon = new Image()
 					{
-						Source = window.Icon
+						Source = window.GetIcon(IconSize.Small),
 					},
 				};
 				windowItem.Click += (eventSender, eventArgs) => CaptureWindow(window);
