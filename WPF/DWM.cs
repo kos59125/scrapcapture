@@ -79,18 +79,6 @@ namespace RecycleBin.ScrapCapture
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct SIZE
-	{
-		public int cx;
-		public int cy;
-
-		public Size ToSize()
-		{
-			return new Size(cx, cy);
-		}
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
 	internal struct DWM_THUMBNAIL_PROPERTIES
 	{
 		public DWM_TNP dwFlags;
@@ -99,46 +87,5 @@ namespace RecycleBin.ScrapCapture
 		public byte opacity;
 		public bool fVisible;
 		public bool fSourceClientAreaOnly;
-	}
-
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct RECT
-	{
-		public int Left;
-		public int Top;
-		public int Right;
-		public int Bottom;
-
-		public RECT(double x, double y, double width, double height)
-		{
-			Left = (int)x;
-			Top = (int)y;
-			Right = (int)(x + width);
-			Bottom = (int)(y + height);
-		}
-
-		public RECT(Point location, Size size)
-		{
-			Left = (int)location.X;
-			Top = (int)location.Y;
-			Right = (int)(location.X + size.Width);
-			Bottom = (int)(location.Y + size.Height);
-		}
-
-		public RECT(Rect rectangle)
-		{
-			Left = (int)rectangle.Left;
-			Top = (int)rectangle.Top;
-			Right = (int)rectangle.Right;
-			Bottom = (int)rectangle.Bottom;
-		}
-
-		public Size Size
-		{
-			get
-			{
-				return new Size(Right - Left, Bottom - Top);
-			}
-		}
 	}
 }
