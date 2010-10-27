@@ -123,7 +123,6 @@ namespace RecycleBin.ScrapCapture
 				mouseLocation = e.GetPosition(this);
 				BringToFront(thumbnail);
 				thumbnail.CaptureMouse();
-				e.Handled = true;
 			}
 		}
 
@@ -145,7 +144,6 @@ namespace RecycleBin.ScrapCapture
 			if (thumbnail != null)
 			{
 				thumbnail.ReleaseMouseCapture();
-				e.Handled = true;
 			}
 		}
 	}
