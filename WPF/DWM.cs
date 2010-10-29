@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -83,11 +84,10 @@ namespace RecycleBin.ScrapCapture
 		private static extern int DwmIsCompositionEnabled(out bool pfEnabled);
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, MARGINS pMarInset);
-
-#if DEBUG
-		[DllImport("dwmapi.dll", PreserveSig = false)]
-		public static extern void DwmEnableComposition(bool uCompositionAction);
-#endif
+		
+		[Conditional("DEBUG")]
+		[DllImport("dwmapi.dll", PreserveSig = false, EntryPoint = "DwmEnableComposition")]
+		public static extern void EnableComposition(bool uCompositionAction);
 	}
 
 	[Flags]

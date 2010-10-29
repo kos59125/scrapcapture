@@ -34,6 +34,22 @@ namespace RecycleBin.ScrapCapture
 		{
 			InitializeComponent();
 			DataContext = this;
+
+			AddDwmMenu(ContextMenu);
+		}
+
+		[Conditional("DEBUG")]
+		private void AddDwmMenu(ItemsControl items)
+		{
+			ContextMenu.Items.Add(new Separator());
+			MenuItem compositionItem = new MenuItem()
+			{
+				Header = "デスクトップ コンポジションを無効にする",
+				IsCheckable = true,
+				IsChecked = !DesktopWindowManager.IsCompositionEnabled,
+			};
+			compositionItem.Click += (sender, e) => DesktopWindowManager.EnableComposition(!compositionItem.IsChecked);
+			ContextMenu.Items.Add(compositionItem);
 		}
 
 		private void selectWindowMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
