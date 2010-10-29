@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace RecycleBin.ScrapCapture
 {
@@ -51,6 +52,25 @@ namespace RecycleBin.ScrapCapture
 			return DwmUpdateThumbnailProperties(thumbnail, ref properties) == S_OK;
 		}
 
+		public static bool ExtendFrame(this Window window, bool extended, Color background)
+		{
+			MARGINS margins = extended ? MARGINS.All : MARGINS.None;
+			return window.ExtendFrame(margins, background);
+		}
+
+		public static bool ExtendFrame(this Window window, Thickness thickness, Color background)
+		{
+			MARGINS margins = new MARGINS(thickness);
+			return window.ExtendFrame(margins, background);
+		}
+
+		private static bool ExtendFrame(this Window window, MARGINS margins, Color background)
+		{
+			IntPtr hWnd = new WindowInteropHelper(window).Handle;
+			HwndSource.FromHwnd(hWnd).CompositionTarget.BackgroundColor = background;
+			return DwmExtendFrameIntoClientArea(hWnd, margins) == S_OK;
+		}
+
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmRegisterThumbnail(IntPtr hwndDestination, IntPtr hwndSource, out IntPtr phThumbnailId);
 		[DllImport("dwmapi.dll")]
@@ -61,6 +81,8 @@ namespace RecycleBin.ScrapCapture
 		private static extern int DwmUpdateThumbnailProperties(IntPtr hThumb, ref DWM_THUMBNAIL_PROPERTIES props);
 		[DllImport("dwmapi.dll")]
 		private static extern int DwmIsCompositionEnabled(out bool pfEnabled);
+		[DllImport("dwmapi.dll")]
+		private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, MARGINS pMarInset);
 
 #if DEBUG
 		[DllImport("dwmapi.dll", PreserveSig = false)]
@@ -87,5 +109,41 @@ namespace RecycleBin.ScrapCapture
 		public byte opacity;
 		public bool fVisible;
 		public bool fSourceClientAreaOnly;
+	}
+
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct MARGINS
+	{
+		public static readonly MARGINS All = new MARGINS(-1);
+		public static readonly MARGINS None = new MARGINS(0);
+
+		public int cxLeftWidth;
+		public int cxRightWidth;
+		public int cyTopHeight;
+		public int cyBottomHeight;
+
+		public MARGINS(Thickness thickness)
+		{
+			cxLeftWidth = (int)thickness.Left;
+			cxRightWidth = (int)thickness.Right;
+			cyTopHeight = (int)thickness.Top;
+			cyBottomHeight = (int)thickness.Bottom;
+		}
+
+		public MARGINS(int value)
+		{
+			cxLeftWidth = value;
+			cxRightWidth = value;
+			cyTopHeight = value;
+			cyBottomHeight = value;
+		}
+
+		public MARGINS(int left, int right, int top, int bottom)
+		{
+			cxLeftWidth = left;
+			cxRightWidth = right;
+			cyTopHeight = top;
+			cyBottomHeight = bottom;
+		}
 	}
 }

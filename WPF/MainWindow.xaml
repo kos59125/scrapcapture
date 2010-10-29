@@ -14,6 +14,8 @@
 			<MenuItem Header="ウィンドウを選択" x:Name="selectWindowMenuItem" SubmenuOpened="selectWindowMenuItem_SubmenuOpened">
 				<CollectionContainer Collection="{StaticResource noSelectionItem}" />
 			</MenuItem>
+			<Separator />
+			<MenuItem Header="半透過ウィンドウ" IsCheckable="True" IsChecked="{Binding Path=AeroGlass}" />
 		</ContextMenu>
 	</Window.ContextMenu>
 	<Canvas x:Name="canvas">

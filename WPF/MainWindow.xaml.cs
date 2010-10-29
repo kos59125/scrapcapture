@@ -5,18 +5,35 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RecycleBin.ScrapCapture
 {
 	public partial class MainWindow : Window
 	{
+		public static readonly DependencyProperty AeroGlassProperty = DependencyProperty.Register("AeroGlass", typeof(bool), typeof(MainWindow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.None, AeroGlassChanged));
+		
 		private static readonly double ScaleDelta = 0.1;
 
 		private Point mouseLocation;
+		private Brush background;
+
+		public bool AeroGlass
+		{
+			get
+			{
+				return (bool)GetValue(AeroGlassProperty);
+			}
+			set
+			{
+				SetValue(AeroGlassProperty, value);
+			}
+		}
 
 		public MainWindow()
 		{
 			InitializeComponent();
+			DataContext = this;
 		}
 
 		private void selectWindowMenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
@@ -103,6 +120,25 @@ namespace RecycleBin.ScrapCapture
 			thumbnail.BringToFront();
 			canvas.Children.Remove(thumbnail);
 			canvas.Children.Add(thumbnail);
+		}
+
+		private static void AeroGlassChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			MainWindow window = d as MainWindow;
+			if (window != null && DesktopWindowManager.IsCompositionEnabled)
+			{
+				bool extended = (bool)e.NewValue;
+				if (extended)
+				{
+					window.background = window.Background;
+					window.Background = Brushes.Transparent;
+				}
+				else
+				{
+					window.Background = window.background;
+				}
+				window.ExtendFrame(extended, Colors.Transparent);
+			}
 		}
 
 		private void Thumbnail_MouseWheel(object sender, MouseWheelEventArgs e)
