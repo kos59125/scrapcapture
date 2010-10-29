@@ -67,6 +67,8 @@ namespace RecycleBin.ScrapCapture
 					Icon = new Image()
 					{
 						Source = window.GetIcon(IconSize.Small),
+						Width = 16,
+						Height = 16,
 					},
 				};
 				windowItem.Click += (eventSender, eventArgs) => CaptureWindow(window);
