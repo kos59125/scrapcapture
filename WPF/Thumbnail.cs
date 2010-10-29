@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace RecycleBin.ScrapCapture
 {
-	public class Thumbnail : FrameworkElement
+	public class Thumbnail : FrameworkElement, IDisposable
 	{
 		public event RoutedEventHandler ThumbnailUpdated
 		{
@@ -131,6 +131,11 @@ namespace RecycleBin.ScrapCapture
 			{
 				return DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
 			}
+		}
+
+		~ Thumbnail()
+		{
+			Dispose();
 		}
 
 		public void ResetDrawnRegion()
@@ -337,6 +342,11 @@ namespace RecycleBin.ScrapCapture
 				thumbnail.UpdateThumbnail(location, newSize);
 				thumbnail.InvalidateVisual();
 			}
+		}
+
+		public virtual void Dispose()
+		{
+			UnsetWindow();
 		}
 	}
 }
