@@ -109,6 +109,37 @@ namespace RecycleBin.ScrapCapture
 			thumbnail.SetBinding(Thumbnail.ClientAreaOnlyProperty, checkedBinding);
 			contextMenu.Items.Add(toggleItem);
 
+			MenuItem selectorItem = new MenuItem()
+			{
+				Header = "描画範囲を選択",
+			};
+			selectorItem.Click += (sender, e) =>
+			{
+				Rect region = thumbnail.DrawnRegion;
+				RegionSelector selector = new RegionSelector();
+				selector.thumbnail.Scale = Math.Min(RegionSelector.ViewerWidth / region.Width, RegionSelector.ViewerHeight / region.Height);
+				selector.thumbnail.ClientAreaOnly = thumbnail.ClientAreaOnly;
+				selector.Loaded += (a, b) =>
+				{
+					selector.Background = Brushes.Transparent;
+					selector.ExtendFrame(new Thickness(RegionSelector.ViewerWidth, 0, 0, 0), Colors.Transparent);
+					selector.thumbnail.SetWindow(thumbnail.Target);
+					selector.X = region.X;
+					selector.Y = region.Y;
+					selector.ThumbnailWidth = region.Width;
+					selector.ThumbnailHeight = region.Height;
+				};
+				selector.ContentRendered += (a, b) =>
+				{
+					selector.thumbnail.DrawnRegion = region;
+				};
+				if (selector.ShowDialog().GetValueOrDefault(false) == true)
+				{
+					thumbnail.DrawnRegion = selector.thumbnail.DrawnRegion;
+				}
+			};
+			contextMenu.Items.Add(selectorItem);
+
 			contextMenu.Items.Add(new Separator());
 
 			MenuItem removeItem = new MenuItem()

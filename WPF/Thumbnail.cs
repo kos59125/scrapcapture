@@ -310,7 +310,7 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.UpdateThumbnail();
+				thumbnail.UpdateLayoutInternal();
 			}
 		}
 
@@ -357,8 +357,11 @@ namespace RecycleBin.ScrapCapture
 		{
 			Point location = new Point(Left, Top);
 			Size newSize = ComputeThumbnailSize();
-			Arrange(new Rect(location, newSize));
-			InvalidateVisual();
+			if (!newSize.IsEmpty && !double.IsInfinity(newSize.Width) && !double.IsInfinity(newSize.Height))
+			{
+				Arrange(new Rect(location, newSize));
+				InvalidateVisual();
+			}
 		}
 
 		private void observer_DoWork(object sender, DoWorkEventArgs e)
@@ -376,6 +379,10 @@ namespace RecycleBin.ScrapCapture
 					continue;
 				}
 				Size newSize = SourceSize;
+				if (newSize.Width == 0 || newSize.Height == 0)
+				{
+					continue;
+				}
 				if (!finalSize.Equals(newSize))
 				{
 					Dispatcher.Invoke(update);
