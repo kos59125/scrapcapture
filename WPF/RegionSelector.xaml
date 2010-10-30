@@ -6,6 +6,7 @@
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="480" />
+			<ColumnDefinition Width="10" />
 			<ColumnDefinition Width="320" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -14,7 +15,7 @@
 		<Canvas>
 			<local:Thumbnail x:Name="thumbnail" />
 		</Canvas>
-		<DockPanel Grid.Column="1" Background="White">
+		<DockPanel Grid.Column="2" Background="White">
 			<Grid DockPanel.Dock="Top">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="30"/>

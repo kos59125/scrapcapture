@@ -122,7 +122,7 @@ namespace RecycleBin.ScrapCapture
 				selector.Loaded += (a, b) =>
 				{
 					selector.Background = Brushes.Transparent;
-					selector.ExtendFrame(new Thickness(RegionSelector.ViewerWidth, 0, 0, 0), Colors.Transparent);
+					selector.ExtendFrame(RegionSelector.AeroRegion, Colors.Transparent);
 					selector.thumbnail.SetWindow(thumbnail.Target);
 					selector.X = region.X;
 					selector.Y = region.Y;

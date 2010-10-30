@@ -11,6 +11,7 @@ namespace RecycleBin.ScrapCapture
 	{
 		public static readonly double ViewerWidth = 480;
 		public static readonly double ViewerHeight = 480;
+		internal static readonly Thickness AeroRegion = new Thickness(ViewerWidth + 10, 0, 0, 0);
 
 		public static readonly DependencyProperty XProperty = DependencyProperty.Register("X", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, XChanged));
 		public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, YChanged));
