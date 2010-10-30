@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -32,7 +33,7 @@ namespace RecycleBin.ScrapCapture
 
 		public static readonly RoutedEvent ThumbnailUpdatedEvent = EventManager.RegisterRoutedEvent("ThumbnailUpdated", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Thumbnail));
 		public static readonly RoutedEvent ThumbnailUpdateFailedEvent = EventManager.RegisterRoutedEvent("ThumbnailUpdateFailed", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Thumbnail));
-
+		
 		public static readonly DependencyProperty TopProperty = DependencyProperty.Register("Top", typeof(double), typeof(Thumbnail), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, TopChanged));
 		public static readonly DependencyProperty LeftProperty = DependencyProperty.Register("Left", typeof(double), typeof(Thumbnail), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, LeftChanged));
 		public static readonly DependencyProperty DrawnRegionProperty = DependencyProperty.Register("DrawnRegion", typeof(Rect), typeof(Thumbnail), new FrameworkPropertyMetadata(Rect.Empty, FrameworkPropertyMetadataOptions.None, DrawnRegionChanged));
@@ -131,6 +132,25 @@ namespace RecycleBin.ScrapCapture
 			{
 				return DesktopWindowManager.QueryThumbnailSourceSize(thumbnail);
 			}
+		}
+
+		private readonly BackgroundWorker observer;
+
+		private bool disposed;
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
+
+		public Thumbnail()
+		{
+			observer = new BackgroundWorker();
+			observer.WorkerSupportsCancellation = true;
+			observer.DoWork += new DoWorkEventHandler(observer_DoWork);
+			observer.RunWorkerAsync();
 		}
 
 		~ Thumbnail()
@@ -239,15 +259,14 @@ namespace RecycleBin.ScrapCapture
 			Size newSize = ComputeThumbnailSize();
 			Point location = new Point(Left + (finalSize.Width - newSize.Width) / 2, Top + (finalSize.Height - newSize.Height) / 2);
 			UpdateThumbnail(location, finalSize);
+			Width = newSize.Width;
+			Height = newSize.Height;
 			return newSize;
 		}
 
 		protected override Size MeasureOverride(Size availableSize)
 		{
-			Size size = ComputeThumbnailSize();
-			Width = size.Width;
-			Height = size.Height;
-			return size;
+			return ComputeThumbnailSize();
 		}
 
 		private Size ComputeThumbnailSize()
@@ -300,13 +319,8 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				thumbnail.UpdateThumbnail();
 				thumbnail.ResetDrawnRegion();
-				Point location = new Point(thumbnail.Left, thumbnail.Top);
-				Size newSize = thumbnail.ComputeThumbnailSize();
-				thumbnail.Measure(newSize);
-				thumbnail.Arrange(new Rect(location, newSize));
-				thumbnail.InvalidateVisual();
+				thumbnail.UpdateLayoutInternal();
 			}
 		}
 
@@ -335,18 +349,50 @@ namespace RecycleBin.ScrapCapture
 			Thumbnail thumbnail = d as Thumbnail;
 			if (thumbnail != null)
 			{
-				Point location = new Point(thumbnail.Left, thumbnail.Top);
-				Size newSize = thumbnail.ComputeThumbnailSize();
-				thumbnail.Measure(newSize);
-				thumbnail.Arrange(new Rect(location, newSize));
-				thumbnail.UpdateThumbnail(location, newSize);
-				thumbnail.InvalidateVisual();
+				thumbnail.UpdateLayoutInternal();
+			}
+		}
+
+		private void UpdateLayoutInternal()
+		{
+			Point location = new Point(Left, Top);
+			Size newSize = ComputeThumbnailSize();
+			Arrange(new Rect(location, newSize));
+			InvalidateVisual();
+		}
+
+		private void observer_DoWork(object sender, DoWorkEventArgs e)
+		{
+			Action update = () =>
+			{
+				ResetDrawnRegion();
+				UpdateLayoutInternal();
+			};
+			Size finalSize = SourceSize;
+			while (!IsDisposed)
+			{
+				if (!IsRegistered)
+				{
+					continue;
+				}
+				Size newSize = SourceSize;
+				if (!finalSize.Equals(newSize))
+				{
+					Dispatcher.Invoke(update);
+					finalSize = newSize;
+				}
 			}
 		}
 
 		public virtual void Dispose()
 		{
+			if (observer.IsBusy)
+			{
+				observer.CancelAsync();
+			}
+			observer.Dispose();
 			UnsetWindow();
+			disposed = true;
 		}
 	}
 }

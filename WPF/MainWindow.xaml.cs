@@ -117,7 +117,7 @@ namespace RecycleBin.ScrapCapture
 			};
 			removeItem.Click += (sender, e) =>
 			{
-				thumbnail.UnsetWindow();
+				thumbnail.Dispose();
 				canvas.Children.Remove(thumbnail);
 			};
 			contextMenu.Items.Add(removeItem);
