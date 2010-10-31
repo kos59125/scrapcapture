@@ -6,16 +6,16 @@
 		  Title="ScrapCapture" Height="480" Width="720" Icon="/ScrapCapture;component/Images/icon.ico">
 	<Window.Resources>
 		<x:ArrayExtension Type="{x:Type system:Object}" x:Key="noSelectionItem">
-			<MenuItem Header="ウィンドウが見つかりません" IsEnabled="False" />
+			<MenuItem Header="{Binding Path=WindowNotFoundMenuItem, Source={StaticResource CultureManager}}" IsEnabled="False" />
 		</x:ArrayExtension>
 	</Window.Resources>
 	<Window.ContextMenu>
 		<ContextMenu>
-			<MenuItem Header="ウィンドウを選択" x:Name="selectWindowMenuItem" SubmenuOpened="selectWindowMenuItem_SubmenuOpened">
+			<MenuItem Header="{Binding Path=SelectWindowMenuItem, Source={StaticResource CultureManager}}" x:Name="selectWindowMenuItem" SubmenuOpened="selectWindowMenuItem_SubmenuOpened">
 				<CollectionContainer Collection="{StaticResource noSelectionItem}" />
 			</MenuItem>
 			<Separator />
-			<MenuItem Header="半透過ウィンドウ" IsCheckable="True" IsChecked="{Binding Path=AeroGlass}" />
+			<MenuItem Header="{Binding Path=AeroGlassWindowMenuItem, Source={StaticResource CultureManager}}" IsCheckable="True" IsChecked="{Binding Path=AeroGlass}" />
 		</ContextMenu>
 	</Window.ContextMenu>
 	<Canvas x:Name="canvas">

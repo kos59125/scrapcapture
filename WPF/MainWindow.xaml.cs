@@ -99,7 +99,7 @@ namespace RecycleBin.ScrapCapture
 
 			MenuItem toggleItem = new MenuItem()
 			{
-				Header = "クライアント領域のみを表示",
+				Header = Globalization.UIMessages.ToggleClientOnlyMenuItem,
 				IsCheckable = true,
 			};
 			Binding checkedBinding = new Binding("IsChecked")
@@ -111,7 +111,7 @@ namespace RecycleBin.ScrapCapture
 
 			MenuItem selectorItem = new MenuItem()
 			{
-				Header = "描画範囲を選択",
+				Header = Globalization.UIMessages.SelectRegionMenuItem,
 			};
 			selectorItem.Click += (sender, e) =>
 			{
@@ -144,7 +144,7 @@ namespace RecycleBin.ScrapCapture
 
 			MenuItem removeItem = new MenuItem()
 			{
-				Header = "削除",
+				Header = Globalization.UIMessages.RemoveMenuItem,
 			};
 			removeItem.Click += (sender, e) =>
 			{
