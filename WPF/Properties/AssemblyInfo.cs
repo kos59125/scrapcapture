@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WPF")]
+[assembly: AssemblyTitle("Scrap Capture")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("RecycleBin")]
-[assembly: AssemblyProduct("WPF")]
+[assembly: AssemblyProduct("Scrap Capture")]
 [assembly: AssemblyCopyright("Copyright © RecycleBin 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
