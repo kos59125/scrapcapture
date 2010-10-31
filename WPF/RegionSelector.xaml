@@ -25,25 +25,25 @@
 					<ColumnDefinition Width="160"/>
 					<ColumnDefinition Width="160"/>
 				</Grid.ColumnDefinitions>
-				<StackPanel Orientation="Horizontal">
-					<Label Content="X" Width="36" />
-					<TextBox x:Name="xTextBox" Text="{Binding Path=X, Mode=TwoWay}" Width="96" GotFocus="TextBox_GotFocus" />
-					<Label Content="px" Width="28" />
+				<StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+					<Label Content="X" Width="64" />
+					<TextBox x:Name="xTextBox" Text="{Binding Path=X, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+					<Label Content="px" Width="32" />
 				</StackPanel>
-				<StackPanel Grid.Row="1" Orientation="Horizontal">
-					<Label Content="Y" Width="36" />
-					<TextBox x:Name="yTextBox" Text="{Binding Path=Y, Mode=TwoWay}" Width="96" GotFocus="TextBox_GotFocus" />
-					<Label Content="px" Width="28" />
+				<StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+					<Label Content="Y" Width="64" />
+					<TextBox x:Name="yTextBox" Text="{Binding Path=Y, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+					<Label Content="px" Width="32" />
 				</StackPanel>
-				<StackPanel Grid.Column="1" Orientation="Horizontal">
-					<Label Content="幅" Width="36" />
-					<TextBox x:Name="widthTextBox" Text="{Binding Path=ThumbnailWidth, Mode=TwoWay}" Width="96" GotFocus="TextBox_GotFocus" />
-					<Label Content="px" Width="28" />
+				<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+					<Label Content="幅" Width="64" />
+					<TextBox x:Name="widthTextBox" Text="{Binding Path=ThumbnailWidth, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+					<Label Content="px" Width="32" />
 				</StackPanel>
 				<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-					<Label Content="高さ" Width="36" />
-					<TextBox x:Name="heightTextBox" Text="{Binding Path=ThumbnailHeight, Mode=TwoWay}" Width="96" GotFocus="TextBox_GotFocus" />
-					<Label Content="px" Width="28" />
+					<Label Content="高さ" Width="64" />
+					<TextBox x:Name="heightTextBox" Text="{Binding Path=ThumbnailHeight, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+					<Label Content="px" Width="32" />
 				</StackPanel>
 			</Grid>
 			<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" VerticalAlignment="Bottom">
