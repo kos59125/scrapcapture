@@ -90,6 +90,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationWindow.cs" />
+    <Compile Include="Converters\BooleanToggleConverter.cs" />
     <Compile Include="Globalization\CultureManager.cs" />
     <Compile Include="Globalization\UIMessages.Designer.cs">
       <AutoGen>True</AutoGen>

@@ -113,6 +113,13 @@ namespace RecycleBin.ScrapCapture
 			{
 				Header = Globalization.UIMessages.SelectRegionMenuItem,
 			};
+			Binding enabledBinding = new Binding("IsEnabled")
+			{
+				Source = selectorItem,
+				Converter = Converters.BooleanToggleConverter.Instance,
+				Mode = BindingMode.OneWayToSource,
+			};
+			toggleItem.SetBinding(MenuItem.IsCheckedProperty, enabledBinding);
 			selectorItem.Click += (sender, e) =>
 			{
 				Rect region = thumbnail.DrawnRegion;
