@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinForms", "WinForms\WinForms.csproj", "{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "WPF\WPF.csproj", "{BDDC8680-66C4-48F8-A678-EA821FAE40FE}"
 EndProject
 Global
@@ -11,10 +9,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D58C248-BFB1-4439-A0E6-1F2C56E8E108}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BDDC8680-66C4-48F8-A678-EA821FAE40FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BDDC8680-66C4-48F8-A678-EA821FAE40FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDDC8680-66C4-48F8-A678-EA821FAE40FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
