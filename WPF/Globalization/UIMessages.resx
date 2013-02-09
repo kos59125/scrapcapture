@@ -141,6 +141,9 @@
   <data name="SelectWindowMenuItem" xml:space="preserve">
     <value>Select window</value>
   </data>
+  <data name="SourceLabel" xml:space="preserve">
+    <value>Source</value>
+  </data>
   <data name="ToggleClientOnlyMenuItem" xml:space="preserve">
     <value>Show only client area</value>
   </data>

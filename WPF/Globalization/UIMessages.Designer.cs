@@ -133,6 +133,15 @@ namespace RecycleBin.ScrapCapture.Globalization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string SourceLabel {
+            get {
+                return ResourceManager.GetString("SourceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show only client area.
         /// </summary>
         public static string ToggleClientOnlyMenuItem {

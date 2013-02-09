@@ -16,36 +16,38 @@
          <local:Thumbnail x:Name="thumbnail" />
       </Canvas>
       <DockPanel Grid.Column="2" Background="White">
-         <Grid DockPanel.Dock="Top">
-            <Grid.RowDefinitions>
-               <RowDefinition Height="30"/>
-               <RowDefinition Height="30"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-               <ColumnDefinition Width="160"/>
-               <ColumnDefinition Width="160"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-               <Label Content="{Binding Path=XLabel, Source={StaticResource CultureManager}}" Width="64" />
-               <TextBox x:Name="xTextBox" Text="{Binding Path=X, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
-               <Label Content="px" Width="32" />
-            </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-               <Label Content="{Binding Path=YLabel, Source={StaticResource CultureManager}}" Width="64" />
-               <TextBox x:Name="yTextBox" Text="{Binding Path=Y, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
-               <Label Content="px" Width="32" />
-            </StackPanel>
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-               <Label Content="{Binding Path=WidthLabel, Source={StaticResource CultureManager}}" Width="64" />
-               <TextBox x:Name="widthTextBox" Text="{Binding Path=ThumbnailWidth, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
-               <Label Content="px" Width="32" />
-            </StackPanel>
-            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-               <Label Content="{Binding Path=HeightLabel, Source={StaticResource CultureManager}}" Width="64" />
-               <TextBox x:Name="heightTextBox" Text="{Binding Path=ThumbnailHeight, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
-               <Label Content="px" Width="32" />
-            </StackPanel>
-         </Grid>
+         <GroupBox DockPanel.Dock="Top" Header="{Binding Path=SourceLabel, Source={StaticResource CultureManager}}">
+            <Grid>
+               <Grid.RowDefinitions>
+                  <RowDefinition Height="30"/>
+                  <RowDefinition Height="30"/>
+               </Grid.RowDefinitions>
+               <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="160"/>
+                  <ColumnDefinition Width="160"/>
+               </Grid.ColumnDefinitions>
+               <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                  <Label Content="{Binding Path=XLabel, Source={StaticResource CultureManager}}" Width="64" />
+                  <TextBox x:Name="xTextBox" Text="{Binding Path=X, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <Label Content="px" Width="32" />
+               </StackPanel>
+               <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                  <Label Content="{Binding Path=YLabel, Source={StaticResource CultureManager}}" Width="64" />
+                  <TextBox x:Name="yTextBox" Text="{Binding Path=Y, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <Label Content="px" Width="32" />
+               </StackPanel>
+               <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                  <Label Content="{Binding Path=WidthLabel, Source={StaticResource CultureManager}}" Width="64" />
+                  <TextBox x:Name="widthTextBox" Text="{Binding Path=ThumbnailWidth, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <Label Content="px" Width="32" />
+               </StackPanel>
+               <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                  <Label Content="{Binding Path=HeightLabel, Source={StaticResource CultureManager}}" Width="64" />
+                  <TextBox x:Name="heightTextBox" Text="{Binding Path=ThumbnailHeight, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <Label Content="px" Width="32" />
+               </StackPanel>
+            </Grid>
+         </GroupBox>
          <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Content="{Binding Path=OKButton, Source={StaticResource CultureManager}}" Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" IsDefault="True" Margin="5" Click="okButton_Click" />
             <Button Content="{Binding Path=CancelButton, Source={StaticResource CultureManager}}" Height="23" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" IsCancel="True" Margin="5" Click="cancelButton_Click" />

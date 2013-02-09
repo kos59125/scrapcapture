@@ -138,6 +138,9 @@
   <data name="SelectWindowMenuItem" xml:space="preserve">
     <value>ウィンドウを選択</value>
   </data>
+  <data name="SourceLabel" xml:space="preserve">
+    <value>入力ソース</value>
+  </data>
   <data name="ToggleClientOnlyMenuItem" xml:space="preserve">
     <value>クライアント領域のみを表示</value>
   </data>
