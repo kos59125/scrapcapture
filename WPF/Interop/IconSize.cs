@@ -1,4 +1,4 @@
-﻿namespace RecycleBin.ScrapCapture
+﻿namespace RecycleBin.ScrapCapture.Interop
 {
    public enum IconSize
    {

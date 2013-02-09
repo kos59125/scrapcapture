@@ -7,7 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace RecycleBin.ScrapCapture
+namespace RecycleBin.ScrapCapture.Interop
 {
    public sealed class ApplicationWindow : SafeHandle
    {

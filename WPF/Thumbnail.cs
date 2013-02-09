@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using RecycleBin.ScrapCapture.Interop;
 
 namespace RecycleBin.ScrapCapture
 {

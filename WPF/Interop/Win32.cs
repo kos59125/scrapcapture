@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
 
-namespace RecycleBin.ScrapCapture
+namespace RecycleBin.ScrapCapture.Interop
 {
    [StructLayout(LayoutKind.Sequential)]
    internal struct SIZE

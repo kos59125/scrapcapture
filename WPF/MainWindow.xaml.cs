@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using RecycleBin.ScrapCapture.Interop;
 
 namespace RecycleBin.ScrapCapture
 {

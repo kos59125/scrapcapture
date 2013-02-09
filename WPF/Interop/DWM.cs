@@ -5,11 +5,12 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 
-namespace RecycleBin.ScrapCapture
+namespace RecycleBin.ScrapCapture.Interop
 {
    internal static class DesktopWindowManager
    {
       private const int S_OK = 0;
+      private static readonly Version WindowsVistaVersion = new Version(6, 0);
 
       public static bool IsCompositionEnabled
       {
@@ -21,6 +22,15 @@ namespace RecycleBin.ScrapCapture
                return enabled;
             }
             return false;
+         }
+      }
+
+      public static bool IsSupportedOperatingSystem
+      {
+         get
+         {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT && os.Version >= WindowsVistaVersion;
          }
       }
 
