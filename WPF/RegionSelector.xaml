@@ -28,22 +28,22 @@
                </Grid.ColumnDefinitions>
                <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
                   <Label Content="{Binding Path=XLabel, Source={StaticResource CultureManager}}" Width="64" />
-                  <TextBox x:Name="xTextBox" Text="{Binding Path=X, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <TextBox Text="{Binding Path=SourceX, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
                   <Label Content="px" Width="32" />
                </StackPanel>
                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                   <Label Content="{Binding Path=YLabel, Source={StaticResource CultureManager}}" Width="64" />
-                  <TextBox x:Name="yTextBox" Text="{Binding Path=Y, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <TextBox Text="{Binding Path=SourceY, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
                   <Label Content="px" Width="32" />
                </StackPanel>
                <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
                   <Label Content="{Binding Path=WidthLabel, Source={StaticResource CultureManager}}" Width="64" />
-                  <TextBox x:Name="widthTextBox" Text="{Binding Path=ThumbnailWidth, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <TextBox Text="{Binding Path=SourceWidth, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
                   <Label Content="px" Width="32" />
                </StackPanel>
                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                   <Label Content="{Binding Path=HeightLabel, Source={StaticResource CultureManager}}" Width="64" />
-                  <TextBox x:Name="heightTextBox" Text="{Binding Path=ThumbnailHeight, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
+                  <TextBox Text="{Binding Path=SourceHeight, Mode=TwoWay}" Width="64" GotFocus="TextBox_GotFocus" TextAlignment="Right" />
                   <Label Content="px" Width="32" />
                </StackPanel>
             </Grid>

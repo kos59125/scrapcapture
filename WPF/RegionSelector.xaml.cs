@@ -13,53 +13,53 @@ namespace RecycleBin.ScrapCapture
       public static readonly double ViewerHeight = 480;
       internal static readonly Thickness AeroRegion = new Thickness(ViewerWidth + 10, 0, 0, 0);
 
-      public static readonly DependencyProperty XProperty = DependencyProperty.Register("X", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, XChanged));
-      public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, YChanged));
-      public static readonly DependencyProperty ThumbnailWidthProperty = DependencyProperty.Register("ThumbnailWidth", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, ThumbnailWidthChanged));
-      public static readonly DependencyProperty ThumbnailHeightProperty = DependencyProperty.Register("ThumbnailHeight", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, ThumbnailHeightChanged));
+      public static readonly DependencyProperty SourceXProperty = DependencyProperty.Register("SourceX", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, SourceXChanged));
+      public static readonly DependencyProperty SourceYProperty = DependencyProperty.Register("SourceY", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, SourceYChanged));
+      public static readonly DependencyProperty SourceWidthProperty = DependencyProperty.Register("SourceWidth", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, SourceWidthChanged));
+      public static readonly DependencyProperty SourceHeightProperty = DependencyProperty.Register("SourceHeight", typeof(double), typeof(RegionSelector), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.None, SourceHeightChanged));
 
-      public double X
+      public double SourceX
       {
          get
          {
-            return (double)GetValue(XProperty);
+            return (double)GetValue(SourceXProperty);
          }
          set
          {
-            SetValue(XProperty, value);
+            SetValue(SourceXProperty, value);
          }
       }
-      public double Y
+      public double SourceY
       {
          get
          {
-            return (double)GetValue(YProperty);
+            return (double)GetValue(SourceYProperty);
          }
          set
          {
-            SetValue(YProperty, value);
+            SetValue(SourceYProperty, value);
          }
       }
-      public double ThumbnailWidth
+      public double SourceWidth
       {
          get
          {
-            return (double)GetValue(ThumbnailWidthProperty);
+            return (double)GetValue(SourceWidthProperty);
          }
          set
          {
-            SetValue(ThumbnailWidthProperty, value);
+            SetValue(SourceWidthProperty, value);
          }
       }
-      public double ThumbnailHeight
+      public double SourceHeight
       {
          get
          {
-            return (double)GetValue(ThumbnailHeightProperty);
+            return (double)GetValue(SourceHeightProperty);
          }
          set
          {
-            SetValue(ThumbnailHeightProperty, value);
+            SetValue(SourceHeightProperty, value);
          }
       }
 
@@ -69,7 +69,7 @@ namespace RecycleBin.ScrapCapture
          DataContext = this;
       }
 
-      private static void XChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+      private static void SourceXChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
       {
          RegionSelector selector = d as RegionSelector;
          if (selector != null)
@@ -78,17 +78,17 @@ namespace RecycleBin.ScrapCapture
             double sourceWidth = selector.thumbnail.SourceSize.Width;
             if (x < 0 || x >= sourceWidth)
             {
-               selector.X = (double)e.OldValue;
+               selector.SourceX = (double)e.OldValue;
             }
-            if (x + selector.ThumbnailWidth > sourceWidth)
+            if (x + selector.SourceWidth > sourceWidth)
             {
-               selector.ThumbnailWidth = sourceWidth - x;
+               selector.SourceWidth = sourceWidth - x;
             }
             Scale(selector);
          }
       }
 
-      private static void YChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+      private static void SourceYChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
       {
          RegionSelector selector = d as RegionSelector;
          if (selector != null)
@@ -97,41 +97,41 @@ namespace RecycleBin.ScrapCapture
             double sourceHeight = selector.thumbnail.SourceSize.Height;
             if (y < 0 || y >= sourceHeight)
             {
-               selector.Y = (double)e.OldValue;
+               selector.SourceY = (double)e.OldValue;
             }
-            if (y + selector.ThumbnailHeight > sourceHeight)
+            if (y + selector.SourceHeight > sourceHeight)
             {
-               selector.ThumbnailHeight = sourceHeight - y;
+               selector.SourceHeight = sourceHeight - y;
             }
             Scale(selector);
          }
       }
 
-      private static void ThumbnailWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+      private static void SourceWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
       {
          RegionSelector selector = d as RegionSelector;
          if (selector != null)
          {
             double width = (double)e.NewValue;
             double sourceWidth = selector.thumbnail.SourceSize.Width;
-            if (width < 0 || selector.X + width > sourceWidth)
+            if (width < 0 || selector.SourceX + width > sourceWidth)
             {
-               selector.ThumbnailWidth = sourceWidth - selector.X;
+               selector.SourceWidth = sourceWidth - selector.SourceX;
             }
             Scale(selector);
          }
       }
 
-      private static void ThumbnailHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+      private static void SourceHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
       {
          RegionSelector selector = d as RegionSelector;
          if (selector != null)
          {
             double height = (double)e.NewValue;
             double sourceHeight = selector.thumbnail.SourceSize.Height;
-            if (height < 0 || selector.Y + height > sourceHeight)
+            if (height < 0 || selector.SourceY + height > sourceHeight)
             {
-               selector.ThumbnailHeight = sourceHeight - selector.X;
+               selector.SourceHeight = sourceHeight - selector.SourceX;
             }
             Scale(selector);
          }
@@ -139,7 +139,7 @@ namespace RecycleBin.ScrapCapture
 
       private static void Scale(RegionSelector selector)
       {
-         Rect region = new Rect(selector.X, selector.Y, selector.ThumbnailWidth, selector.ThumbnailHeight);
+         Rect region = new Rect(selector.SourceX, selector.SourceY, selector.SourceWidth, selector.SourceHeight);
          selector.thumbnail.DrawnRegion = region;
          selector.thumbnail.Scale = Math.Min(ViewerWidth / region.Width, ViewerHeight / region.Height);
       }
